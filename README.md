@@ -1,0 +1,2 @@
+# Secret Hitler Server
+This is the server side code for a app version of the secret hitler game. I'm writing it in the Java Spring framework. It has a companion app that will be written in React Native.
