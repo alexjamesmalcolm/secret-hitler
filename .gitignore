@@ -1,0 +1,9 @@
+.classpath
+.project
+.gradle
+.settings
+build
+bin
+gradle.properties
+*.db
+.sts4-cache/classpath-data.json
