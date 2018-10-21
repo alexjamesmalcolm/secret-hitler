@@ -24,14 +24,26 @@ repositories {
 }
 
 
+ext {
+	springCloudVersion = 'Finchley.SR1'
+}
+
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation('org.springframework.boot:spring-boot-starter-security')
 	implementation('org.springframework.boot:spring-boot-starter-web')
-	compile('javax.xml.bind:jaxb-api:2.3.0')
+	implementation('org.springframework.cloud:spring-cloud-starter-oauth2')
+	implementation('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure')
+	implementation('javax.xml.bind:jaxb-api:2.3.0')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('com.h2database:h2')
 	runtimeOnly('org.postgresql:postgresql')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.security:spring-security-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
