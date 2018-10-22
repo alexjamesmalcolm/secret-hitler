@@ -8,6 +8,6 @@ public class LobbyController {
 	
 	@RequestMapping("/")
 	public String loginView() {
-		return "index";
+		return "login";
 	}
 }
