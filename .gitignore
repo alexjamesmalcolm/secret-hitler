@@ -7,3 +7,5 @@ bin
 gradle.properties
 *.db
 .sts4-cache/classpath-data.json
+*.iml
+*.idea
