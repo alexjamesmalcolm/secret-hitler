@@ -145,11 +145,16 @@ public class GameTest {
     }
 
     @Test
-    public void shouldNotBeAbleToAddPlayersWhenGameIsStarted() {
+    public void shouldNotBeAbleToAddPlayersWhenGameIsStarted() throws TooFewPlayersException {
         underTest.addPlayer(playerOne);
         underTest.start();
         underTest.addPlayer(playerTwo);
         Collection<Player> players = underTest.getPlayers();
         assertThat(players.contains(playerTwo), is(false));
+    }
+
+    @Test(expected = TooFewPlayersException.class)
+    public void shouldNotBeAbleToStartWithTooFewPlayers() throws TooFewPlayersException {
+        underTest.start();
     }
 }

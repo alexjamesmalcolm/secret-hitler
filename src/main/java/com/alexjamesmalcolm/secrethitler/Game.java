@@ -45,7 +45,11 @@ public class Game {
         return 2;
     }
 
-    public void start() {
-        isStarted = true;
+    public void start() throws TooFewPlayersException {
+        if (players.size() > 0) {
+            isStarted = true;
+        } else {
+            throw new TooFewPlayersException();
+        }
     }
 }
