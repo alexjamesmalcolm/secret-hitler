@@ -104,4 +104,15 @@ public class GameTest {
         int actual = underTest.numberOfLiberals();
         assertThat(actual, is(6));
     }
+
+    @Test
+    public void shouldHaveTwoFascistsIfThereAreFivePlayers() {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        int actual = underTest.numberOfFascists();
+        assertThat(actual, is(2));
+    }
 }
