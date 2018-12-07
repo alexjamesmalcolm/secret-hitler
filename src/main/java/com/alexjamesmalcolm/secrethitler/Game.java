@@ -1,13 +1,21 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Game {
+
+    @Resource
+    Math math;
+
     private Collection<Player> players = new ArrayList<>();
+    private boolean isStarted = false;
 
     public void addPlayer(Player player) {
-        this.players.add(player);
+        if (!isStarted) {
+            this.players.add(player);
+        }
     }
 
     public Collection<Player> getPlayers() {
@@ -35,5 +43,9 @@ public class Game {
             return 3;
         }
         return 2;
+    }
+
+    public void start() {
+        isStarted = true;
     }
 }

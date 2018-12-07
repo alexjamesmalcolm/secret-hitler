@@ -143,4 +143,13 @@ public class GameTest {
         int actual = underTest.numberOfFascists();
         assertThat(actual, is(4));
     }
+
+    @Test
+    public void shouldNotBeAbleToAddPlayersWhenGameIsStarted() {
+        underTest.addPlayer(playerOne);
+        underTest.start();
+        underTest.addPlayer(playerTwo);
+        Collection<Player> players = underTest.getPlayers();
+        assertThat(players.contains(playerTwo), is(false));
+    }
 }
