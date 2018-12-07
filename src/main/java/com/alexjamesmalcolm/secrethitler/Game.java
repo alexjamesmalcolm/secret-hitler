@@ -15,6 +15,9 @@ public class Game {
     }
 
     public int numberOfLiberals() {
+        if (players.size() > 9) {
+            return 6;
+        }
         if (players.size() > 7) {
             return 5;
         }

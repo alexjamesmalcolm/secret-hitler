@@ -76,7 +76,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveFiveLiberalsIfthereAreEightPlayers() {
+    public void shouldHaveFiveLiberalsIfThereAreEightPlayers() {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -87,5 +87,21 @@ public class GameTest {
         underTest.addPlayer(playerEight);
         int actual = underTest.numberOfLiberals();
         assertThat(actual, is (5));
+    }
+
+    @Test
+    public void shouldHaveSixLiberalsIfThereAreTenPlayers() {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.addPlayer(playerSix);
+        underTest.addPlayer(playerSeven);
+        underTest.addPlayer(playerEight);
+        underTest.addPlayer(playerNine);
+        underTest.addPlayer(playerTen);
+        int actual = underTest.numberOfLiberals();
+        assertThat(actual, is(6));
     }
 }
