@@ -13,4 +13,8 @@ public class Game {
     public Collection<Player> getPlayers() {
         return players;
     }
+
+    public int numberOfLiberals() {
+        return 3;
+    }
 }
