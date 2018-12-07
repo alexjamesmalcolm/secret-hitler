@@ -28,6 +28,9 @@ public class Game {
     }
 
     public int numberOfFascists() {
+        if (players.size() >= 9) {
+            return 4;
+        }
         if (players.size() >= 7) {
             return 3;
         }
