@@ -11,10 +11,26 @@ import static org.junit.Assert.assertThat;
 public class GameTest {
 
     private Game underTest;
+    private Player playerOne;
+    private Player playerTwo;
+    private Player playerThree;
+    private Player playerFour;
+    private Player playerFive;
+    private Player playerSix;
+    private Player playerSeven;
+    private Player playerEight;
+    private Player playerNine;
+    private Player playerTen;
 
     @Before
     public void setup() {
         underTest = new Game();
+        playerOne = new Player("John");
+        playerTwo = new Player("Jane");
+        playerThree = new Player("Joey");
+        playerFour = new Player("Jose");
+        playerFive = new Player("James");
+        playerSix = new Player("Jesus");
     }
 
     @Test
@@ -38,11 +54,6 @@ public class GameTest {
 
     @Test
     public void shouldHaveThreeLiberalsIfThereAreFivePlayers() {
-        Player playerOne = new Player("John");
-        Player playerTwo = new Player("Jane");
-        Player playerThree = new Player("Joey");
-        Player playerFour = new Player("Jose");
-        Player playerFive = new Player("James");
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -50,5 +61,17 @@ public class GameTest {
         underTest.addPlayer(playerFive);
         int actual = underTest.numberOfLiberals();
         assertThat(actual, is(3));
+    }
+
+    @Test
+    public void shouldHaveFourLiberalsIfThereAreSixPlayers() {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.addPlayer(playerSix);
+        int actual = underTest.numberOfLiberals();
+        assertThat(actual, is(4));
     }
 }
