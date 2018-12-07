@@ -74,4 +74,18 @@ public class GameTest {
         int actual = underTest.numberOfLiberals();
         assertThat(actual, is(4));
     }
+
+    @Test
+    public void shouldHaveFiveLiberalsIfthereAreEightPlayers() {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.addPlayer(playerSix);
+        underTest.addPlayer(playerSeven);
+        underTest.addPlayer(playerEight);
+        int actual = underTest.numberOfLiberals();
+        assertThat(actual, is (5));
+    }
 }
