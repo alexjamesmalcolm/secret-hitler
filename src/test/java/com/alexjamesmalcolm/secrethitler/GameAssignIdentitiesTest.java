@@ -19,16 +19,16 @@ public class GameAssignIdentitiesTest {
     @Before
     public void setup() {
         underTest = new Game();
-        Player playerOne = new Player("");
-        Player playerTwo = new Player("");
-        Player playerThree = new Player("");
-        Player playerFour = new Player("");
-        Player playerFive = new Player("");
-        Player playerSix = new Player("");
-        Player playerSeven = new Player("");
-        Player playerEight = new Player("");
-        Player playerNine = new Player("");
-        Player playerTen = new Player("");
+        Player playerOne = new Player();
+        Player playerTwo = new Player();
+        Player playerThree = new Player();
+        Player playerFour = new Player();
+        Player playerFive = new Player();
+        Player playerSix = new Player();
+        Player playerSeven = new Player();
+        Player playerEight = new Player();
+        Player playerNine = new Player();
+        Player playerTen = new Player();
         players = Arrays.asList(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine, playerTen);
     }
 

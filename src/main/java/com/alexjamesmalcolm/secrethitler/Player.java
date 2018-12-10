@@ -6,7 +6,7 @@ public class Player {
     private String role;
     private String party;
 
-    public Player(String name) {
+    public Player() {
         role = "";
         party = "";
     }

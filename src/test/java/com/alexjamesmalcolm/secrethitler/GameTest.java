@@ -28,18 +28,18 @@ public class GameTest {
     @Before
     public void setup() {
         underTest = new Game();
-        playerOne = new Player("John");
-        playerTwo = new Player("Jane");
-        playerThree = new Player("Joey");
-        playerFour = new Player("Jose");
-        playerFive = new Player("James");
-        playerSix = new Player("Jesus");
+        playerOne = new Player();
+        playerTwo = new Player();
+        playerThree = new Player();
+        playerFour = new Player();
+        playerFive = new Player();
+        playerSix = new Player();
     }
 
     @Test
     public void shouldHavePlayer() {
         String name = "John";
-        Player player = new Player(name);
+        Player player = new Player();
         underTest.addPlayer(player);
         Collection<Player> players = underTest.getPlayers();
         assertThat(players.contains(player), is(true));
@@ -47,8 +47,8 @@ public class GameTest {
 
     @Test
     public void shouldHaveManyPlayers() {
-        Player player = new Player("John");
-        Player anotherPlayer = new Player("Jane");
+        Player player = new Player();
+        Player anotherPlayer = new Player();
         underTest.addPlayer(player);
         underTest.addPlayer(anotherPlayer);
         Collection<Player> players = underTest.getPlayers();
