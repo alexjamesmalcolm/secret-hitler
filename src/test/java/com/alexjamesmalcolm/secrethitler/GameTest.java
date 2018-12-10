@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -174,5 +175,17 @@ public class GameTest {
     @Test(expected = GameNotStartedException.class)
     public void shouldNotHaveBoardBeforeGameStarts() throws GameNotStartedException {
         underTest.getBoard();
+    }
+
+    @Test
+    public void shouldHaveBoardAfterGameStarts() throws GameNotStartedException, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        Board board = underTest.getBoard();
+        assertThat(board, notNullValue());
     }
 }

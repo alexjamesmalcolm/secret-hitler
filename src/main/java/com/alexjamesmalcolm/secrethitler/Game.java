@@ -1,6 +1,5 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -71,7 +70,11 @@ public class Game {
         }
     }
 
-    public void getBoard() throws GameNotStartedException {
-        throw new GameNotStartedException();
+    public Board getBoard() throws GameNotStartedException {
+        if (isStarted) {
+            return new Board();
+        } else {
+            throw new GameNotStartedException();
+        }
     }
 }
