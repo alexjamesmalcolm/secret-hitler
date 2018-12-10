@@ -46,7 +46,7 @@ public class Game {
     }
 
     public void start() throws TooFewPlayersException {
-        if (players.size() > 0) {
+        if (players.size() > 4) {
             isStarted = true;
         } else {
             throw new TooFewPlayersException();
