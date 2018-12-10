@@ -1,5 +1,7 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
+
 public class Player {
     private String role;
     private String party;

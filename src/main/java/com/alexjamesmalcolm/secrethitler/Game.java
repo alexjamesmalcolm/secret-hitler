@@ -1,5 +1,9 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
+import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
