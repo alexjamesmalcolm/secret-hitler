@@ -2,21 +2,35 @@ package com.alexjamesmalcolm.secrethitler;
 
 public class Player {
     private String role;
+    private String party;
 
     public Player(String name) {
-
+        role = "";
+        party = "";
     }
 
-    public void setAsLiberal() {
+    public void setAsLiberal() throws IdentityAlreadyAssigned {
+        if (!role.isEmpty()) {
+            throw new IdentityAlreadyAssigned();
+        }
         role = "liberal";
+        party = "liberal";
     }
 
-    public void setAsFascist() {
+    public void setAsFascist() throws IdentityAlreadyAssigned {
+        if (!role.isEmpty()) {
+            throw new IdentityAlreadyAssigned();
+        }
         role = "fascist";
+        party = "fascist";
     }
 
-    public void setAsHitler() {
+    public void setAsHitler() throws IdentityAlreadyAssigned {
+        if (!role.isEmpty()) {
+            throw new IdentityAlreadyAssigned();
+        }
         role = "hitler";
+        party = "fascist";
     }
 
     public String getSecretRole() {
@@ -24,6 +38,6 @@ public class Player {
     }
 
     public String getPartyMembership() {
-        return "liberal";
+        return party;
     }
 }

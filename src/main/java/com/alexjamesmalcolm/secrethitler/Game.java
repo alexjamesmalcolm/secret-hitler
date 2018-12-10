@@ -3,11 +3,10 @@ package com.alexjamesmalcolm.secrethitler;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class Game {
-
-    @Resource
-    Math math;
 
     private Collection<Player> players = new ArrayList<>();
     private boolean isStarted = false;
@@ -46,10 +45,33 @@ public class Game {
     }
 
     public void start() throws TooFewPlayersException {
-        if (players.size() > 4) {
-            isStarted = true;
-        } else {
+        if (players.size() < 5) {
             throw new TooFewPlayersException();
         }
+        isStarted = true;
+        assignIdentities();
+    }
+
+    void assignIdentities() {
+        try {
+            List<Player> players = (List<Player>) this.players;
+            Collections.shuffle(players);
+            Player hitler = players.get(0);
+            List<Player> liberals = players.subList(1, 1 + numberOfLiberals());
+            List<Player> fascists = players.subList(1 + numberOfLiberals(), numberOfLiberals() + numberOfFascists());
+            for (Player liberal : liberals) {
+                liberal.setAsLiberal();
+            }
+            for (Player fascist : fascists) {
+                fascist.setAsFascist();
+            }
+            hitler.setAsHitler();
+        } catch (IdentityAlreadyAssigned e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getBoard() throws GameNotStartedException {
+        throw new GameNotStartedException();
     }
 }

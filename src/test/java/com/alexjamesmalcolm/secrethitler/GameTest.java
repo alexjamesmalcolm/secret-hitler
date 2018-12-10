@@ -170,4 +170,9 @@ public class GameTest {
         underTest.addPlayer(playerFour);
         underTest.start();
     }
+
+    @Test(expected = GameNotStartedException.class)
+    public void shouldNotHaveBoardBeforeGameStarts() throws GameNotStartedException {
+        underTest.getBoard();
+    }
 }
