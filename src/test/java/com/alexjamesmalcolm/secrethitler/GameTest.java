@@ -378,4 +378,68 @@ public class GameTest {
         Optional<Player> potentialChancellor = underTest.getChancellor();
         assertThat(potentialChancellor.get(), is(playerThree));
     }
+
+    @Test(expected = InvalidNomination.class)
+    public void shouldNotAllowATermLimitedPlayerToBeNominated() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        playerTwo.limitTerm();
+        underTest.nominateAsChancellor(playerTwo);
+    }
+
+    @Test(expected = InvalidNomination.class)
+    public void shouldTermLimitPlayerAfterBeingElectedChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerFive);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteYes(playerFour);
+        underTest.voteYes(playerFive);
+        underTest.nominateAsChancellor(playerFive);
+    }
+
+    @Test(expected = InvalidNomination.class)
+    public void shouldTermLimitPlayerAfterBeingElectedPresident() throws InvalidNomination, GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerFive);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteYes(playerFour);
+        underTest.voteYes(playerFive);
+        underTest.nominateAsChancellor(playerOne);
+    }
+
+    @Test
+    public void shouldMoveUpElectionTrackerWhenVoteFails() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteNo(playerOne);
+        underTest.voteNo(playerTwo);
+        underTest.voteNo(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteNo(playerFive);
+        int actual = underTest.getFailedElectionsUntilShutdown();
+        assertThat(actual, is(2));
+    }
 }

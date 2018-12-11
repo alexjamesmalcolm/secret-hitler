@@ -89,32 +89,30 @@ public class Game {
     }
 
     public void nominateAsChancellor(Player player) throws InvalidNomination {
-        playersThatVotedYes.clear();
-        playersThatVotedNo.clear();
         if (presidentialCandidate.equals(player)) {
             throw new InvalidNomination();
         }
+        if (player.isTermLimited()) {
+            throw new InvalidNomination();
+        }
+        playersThatVotedYes.clear();
+        playersThatVotedNo.clear();
         chancellorNominee = player;
     }
 
     public void voteYes(Player voter) {
         playersThatVotedYes.add(voter);
         playersThatVotedNo.remove(voter);
-//        System.out.println("Yes: " + playersThatVotedYes.size() + " No: " + playersThatVotedNo.size() + " Players: " + players.size());
-        if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
-            president = presidentialCandidate;
-            int index = players.indexOf(presidentialCandidate);
-            try {
-                presidentialCandidate = players.get(index + 1);
-            } catch (IndexOutOfBoundsException e) {
-                presidentialCandidate = players.get(0);
-            }
-        }
+        voteHelper();
     }
 
     public void voteNo(Player voter) {
         playersThatVotedNo.add(voter);
         playersThatVotedYes.remove(voter);
+        voteHelper();
+    }
+
+    private void voteHelper() {
         if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
             president = presidentialCandidate;
             int index = players.indexOf(presidentialCandidate);
@@ -123,6 +121,8 @@ public class Game {
             } catch (IndexOutOfBoundsException e) {
                 presidentialCandidate = players.get(0);
             }
+            chancellorNominee.limitTerm();
+            president.limitTerm();
         }
     }
 
@@ -146,5 +146,9 @@ public class Game {
 
     public Player getPresidentialCandidate() {
         return presidentialCandidate;
+    }
+
+    public int getFailedElectionsUntilShutdown() {
+        return 2;
     }
 }

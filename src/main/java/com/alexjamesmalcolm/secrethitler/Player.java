@@ -6,6 +6,7 @@ public class Player {
     private final String name;
     private String role;
     private String party;
+    private boolean termLimited;
 
     public Player(String name) {
         this.name = name;
@@ -48,5 +49,13 @@ public class Player {
     @Override
     public String toString() {
         return "Player@" + name;
+    }
+
+    public void limitTerm() {
+        termLimited = true;
+    }
+
+    public boolean isTermLimited() {
+        return termLimited;
     }
 }
