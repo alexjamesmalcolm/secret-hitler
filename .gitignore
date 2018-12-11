@@ -9,3 +9,4 @@ gradle.properties
 .sts4-cache/classpath-data.json
 *.iml
 *.idea
+.vscode
