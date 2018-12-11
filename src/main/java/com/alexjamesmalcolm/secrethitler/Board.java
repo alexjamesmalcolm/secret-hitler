@@ -1,10 +1,8 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameException;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.Execution;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.InvestigateLoyalty;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
@@ -15,6 +13,7 @@ import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import javafx.util.Pair;
 
 public class Board {
 
@@ -32,19 +31,22 @@ public class Board {
             throw new LiberalsWin();
         }
         long numberOfFascistPolicies = policies.stream().filter(p -> p instanceof FascistPolicy).count();
-        if (numberOfFascistPolicies == 5) {
+        if (numberOfFascistPolicies == 6) {
             throw new FascistsWin();
         }
-        if (players.size() > 0) {
-        	System.out.println("Number of fascist policies");
-        	System.out.println(numberOfFascistPolicies);
-        	if (numberOfFascistPolicies == 4) {
-        		throw new Execution();
-        	}
-        	if (numberOfFascistPolicies == 3) {
-        		throw new SpecialElection();
-        	}
-        	throw new InvestigateLoyalty();
+        if (numberOfFascistPolicies >= 4) {
+            throw new Execution();
+        }
+        if (numberOfFascistPolicies == 3) {
+            throw new SpecialElection();
+        }
+        if (players.size() >= 9) {
+            throw new InvestigateLoyalty();
+        }
+        if (players.size() >= 7) {
+            if (numberOfFascistPolicies == 2) {
+                throw new InvestigateLoyalty();
+            }
         }
     }
 }
