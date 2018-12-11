@@ -3,10 +3,12 @@ package com.alexjamesmalcolm.secrethitler;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 
 public class Player {
+    private final String name;
     private String role;
     private String party;
 
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         role = "";
         party = "";
     }
@@ -41,5 +43,10 @@ public class Player {
 
     public String getPartyMembership() {
         return party;
+    }
+
+    @Override
+    public String toString() {
+        return "Player@" + name;
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -30,18 +31,18 @@ public class GameTest {
     @Before
     public void setup() {
         underTest = new Game();
-        playerOne = new Player();
-        playerTwo = new Player();
-        playerThree = new Player();
-        playerFour = new Player();
-        playerFive = new Player();
-        playerSix = new Player();
+        playerOne = new Player("Player One");
+        playerTwo = new Player("Player Two");
+        playerThree = new Player("Player Three");
+        playerFour = new Player("Player Four");
+        playerFive = new Player("Player Five");
+        playerSix = new Player("Player Six");
     }
 
     @Test
     public void shouldHavePlayer() throws GameFullOfPlayers {
         String name = "John";
-        Player player = new Player();
+        Player player = new Player(name);
         underTest.addPlayer(player);
         Collection<Player> players = underTest.getPlayers();
         assertThat(players.contains(player), is(true));
@@ -49,8 +50,8 @@ public class GameTest {
 
     @Test
     public void shouldHaveManyPlayers() throws GameFullOfPlayers {
-        Player player = new Player();
-        Player anotherPlayer = new Player();
+        Player player = new Player("Player");
+        Player anotherPlayer = new Player("Another Player");
         underTest.addPlayer(player);
         underTest.addPlayer(anotherPlayer);
         Collection<Player> players = underTest.getPlayers();
@@ -205,7 +206,7 @@ public class GameTest {
         underTest.addPlayer(playerEight);
         underTest.addPlayer(playerNine);
         underTest.addPlayer(playerTen);
-        Player playerEleven = new Player();
+        Player playerEleven = new Player("Player Eleven");
         underTest.addPlayer(playerEleven);
     }
 
@@ -335,8 +336,9 @@ public class GameTest {
         underTest.voteNo(playerThree);
         underTest.voteNo(playerFour);
         underTest.voteNo(playerFive);
-        System.out.println(underTest.getPlayers());
+        List<Player> players = underTest.getPlayers();
+        Player nextCandidate = players.get(1);
         Player presidentialCandidate = underTest.getPresidentialCandidate();
-        assertThat(presidentialCandidate, is(playerTwo));
+        assertThat(presidentialCandidate, is(nextCandidate));
     }
 }

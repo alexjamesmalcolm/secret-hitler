@@ -66,7 +66,7 @@ public class Game {
 
     void assignIdentities() {
         try {
-            List<Player> players = getPlayers();
+            List<Player> players = new LinkedList<>(getPlayers());
             Collections.shuffle(players);
             Player hitler = players.get(0);
             List<Player> liberals = players.subList(1, 1 + numberOfLiberals());
@@ -114,10 +114,11 @@ public class Game {
         if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
             president = presidentialCandidate;
             int index = players.indexOf(presidentialCandidate);
-            if (index == players.size()) {
-                index = -1;
+            try {
+                presidentialCandidate = players.get(index + 1);
+            } catch(IndexOutOfBoundsException e) {
+                presidentialCandidate = players.get(0);
             }
-            presidentialCandidate = players.get(index + 1);
         }
     }
 

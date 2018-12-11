@@ -52,15 +52,15 @@ public class BoardTest {
         fascistPolicyFour = new FascistPolicy();
         fascistPolicyFive = new FascistPolicy();
         fascistPolicySix = new FascistPolicy();
-        playerOne = new Player();
-        playerTwo = new Player();
-        playerThree = new Player();
-        playerFour = new Player();
-        playerFive = new Player();
-        playerSix = new Player();
-        playerSeven = new Player();
-        playerEight = new Player();
-        playerNine = new Player();
+        playerOne = new Player("Player One");
+        playerTwo = new Player("Player Two");
+        playerThree = new Player("Player Three");
+        playerFour = new Player("Player Four");
+        playerFive = new Player("Player Five");
+        playerSix = new Player("Player Six");
+        playerSeven = new Player("Player Seven");
+        playerEight = new Player("Player Eight");
+        playerNine = new Player("Player Nine");
     }
 
     @Test(expected = LiberalsWin.class)
