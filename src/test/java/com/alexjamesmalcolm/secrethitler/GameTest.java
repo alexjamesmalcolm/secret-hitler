@@ -93,7 +93,7 @@ public class GameTest {
         underTest.addPlayer(playerSeven);
         underTest.addPlayer(playerEight);
         int actual = underTest.numberOfLiberals();
-        assertThat(actual, is (5));
+        assertThat(actual, is(5));
     }
 
     @Test
@@ -352,5 +352,16 @@ public class GameTest {
         underTest.addPlayer(playerFive);
         underTest.start();
         underTest.nominateAsChancellor(playerOne);
+    }
+
+    @Test
+    public void shouldResetVotesAfterAnElection() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
     }
 }

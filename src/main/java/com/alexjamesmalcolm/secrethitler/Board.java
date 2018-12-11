@@ -1,8 +1,5 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import java.util.*;
-
-import com.alexjamesmalcolm.secrethitler.exceptions.GameException;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.Execution;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.InvestigateLoyalty;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
@@ -13,14 +10,18 @@ import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
-import javafx.util.Pair;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class Board {
 
     Collection<Player> players;
     List<Policy> policies = new ArrayList<>();
 
-    public Board(Player...players) {
+    public Board(Player... players) {
         this.players = Arrays.asList(players);
     }
 

@@ -1,9 +1,5 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.Execution;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.InvestigateLoyalty;
 import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
@@ -14,6 +10,8 @@ import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import org.junit.Before;
+import org.junit.Test;
 
 public class BoardTest {
 
@@ -87,22 +85,28 @@ public class BoardTest {
         underTest = new Board();
         try {
             underTest.place(fascistPolicyOne);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyTwo);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyThree);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyFour);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyFive);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicySix);
-        } catch(PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
     }
 
     @Test(expected = InvestigateLoyalty.class)
@@ -115,74 +119,74 @@ public class BoardTest {
     public void shouldThrowInvestigateLoyaltyWhenThereAreNinePlayersAndTheSecondFascistPolicyHasBeenPlaced() throws Victory, PresidentialPower {
         underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
         try {
-        	underTest.place(new FascistPolicy());
+            underTest.place(new FascistPolicy());
         } catch (InvestigateLoyalty e) {
-        	//Handled
+            //Handled
         }
         underTest.place(new FascistPolicy());
     }
-    
+
     @Test(expected = SpecialElection.class)
     public void shouldThrowSpecialElectionWhenThereAreNinePlayersAndTheThirdFascistPolicyHasBeenPlaced() throws Victory, PresidentialPower {
-    	underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
-    	try {
-        	underTest.place(new FascistPolicy());
+        underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
+        try {
+            underTest.place(new FascistPolicy());
         } catch (InvestigateLoyalty e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (InvestigateLoyalty e) {
-        	//Handled
+            //Handled
         }
-    	underTest.place(new FascistPolicy());
+        underTest.place(new FascistPolicy());
     }
-    
+
     @Test(expected = Execution.class)
     public void shouldThrowExecutionWhenThereAreNinePlayersAndTheFourthFascistPolicyHasBeenPlaced() throws Victory, PresidentialPower {
-    	underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
-    	try {
-        	underTest.place(new FascistPolicy());
+        underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	underTest.place(new FascistPolicy());
+        underTest.place(new FascistPolicy());
     }
-    
+
     @Test(expected = Execution.class)
     public void shouldThrowExecutionWhenThereAreNinePlayersAndTheFifthFascistPolicyHasBeenPlaced() throws Victory, PresidentialPower {
-    	underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
-    	try {
-        	underTest.place(new FascistPolicy());
+        underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	try {
-        	underTest.place(new FascistPolicy());
+        try {
+            underTest.place(new FascistPolicy());
         } catch (PresidentialPower e) {
-        	//Handled
+            //Handled
         }
-    	underTest.place(new FascistPolicy());
+        underTest.place(new FascistPolicy());
     }
 
     @Test
@@ -216,10 +220,12 @@ public class BoardTest {
         underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven);
         try {
             underTest.place(fascistPolicyOne);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyTwo);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         underTest.place(fascistPolicyThree);
     }
 
@@ -228,13 +234,16 @@ public class BoardTest {
         underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven);
         try {
             underTest.place(fascistPolicyOne);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyTwo);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyThree);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         underTest.place(fascistPolicyFour);
     }
 
@@ -243,16 +252,20 @@ public class BoardTest {
         underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven);
         try {
             underTest.place(fascistPolicyOne);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyTwo);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyThree);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyFour);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         underTest.place(fascistPolicyFive);
     }
 
@@ -291,7 +304,8 @@ public class BoardTest {
         underTest.place(fascistPolicyTwo);
         try {
             underTest.place(fascistPolicyThree);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         underTest.place(fascistPolicyFour);
     }
 
@@ -302,10 +316,12 @@ public class BoardTest {
         underTest.place(fascistPolicyTwo);
         try {
             underTest.place(fascistPolicyThree);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         try {
             underTest.place(fascistPolicyFour);
-        } catch (PresidentialPower ignored) {}
+        } catch (PresidentialPower ignored) {
+        }
         underTest.place(fascistPolicyFive);
     }
 }

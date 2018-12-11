@@ -1,7 +1,6 @@
 package com.alexjamesmalcolm.secrethitler;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.*;
 
@@ -104,7 +103,7 @@ public class Game {
             int index = players.indexOf(presidentialCandidate);
             try {
                 presidentialCandidate = players.get(index + 1);
-            } catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 presidentialCandidate = players.get(0);
             }
         }
@@ -118,7 +117,7 @@ public class Game {
             int index = players.indexOf(presidentialCandidate);
             try {
                 presidentialCandidate = players.get(index + 1);
-            } catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 presidentialCandidate = players.get(0);
             }
         }
