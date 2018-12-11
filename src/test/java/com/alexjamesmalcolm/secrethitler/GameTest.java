@@ -2,6 +2,7 @@ package com.alexjamesmalcolm.secrethitler;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
 import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.exceptions.InvalidNomination;
 import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 import org.junit.Before;
 import org.junit.Test;
@@ -224,7 +225,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldElectPlayerOneAsPresidentAndPlayerTwoAsChancellor() throws GameFullOfPlayers, TooFewPlayersException {
+    public void shouldElectPlayerOneAsPresidentAndPlayerTwoAsChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -244,7 +245,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveNoElectedOfficialsIfVoteWasMajorityNo() throws GameFullOfPlayers, TooFewPlayersException {
+    public void shouldHaveNoElectedOfficialsIfVoteWasMajorityNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -264,7 +265,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveNoElectedOfficialsIfVoteThatWasYesWasChangedToBeNo() throws GameFullOfPlayers, TooFewPlayersException {
+    public void shouldHaveNoElectedOfficialsIfVoteThatWasYesWasChangedToBeNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -285,7 +286,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveElectedOfficialsIfVoteThatWasNoWasChangedToBeYes() throws GameFullOfPlayers, TooFewPlayersException {
+    public void shouldHaveElectedOfficialsIfVoteThatWasNoWasChangedToBeYes() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -306,7 +307,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveNoElectedOfficialsIfVotingIsNotComplete() throws GameFullOfPlayers, TooFewPlayersException {
+    public void shouldHaveNoElectedOfficialsIfVotingIsNotComplete() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -323,7 +324,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHavePresidentialCandidateBePlayerTwoIfElectionFails() throws TooFewPlayersException, GameFullOfPlayers {
+    public void shouldHavePresidentialCandidateBePlayerTwoIfElectionFails() throws TooFewPlayersException, GameFullOfPlayers, InvalidNomination {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -340,5 +341,16 @@ public class GameTest {
         Player nextCandidate = players.get(1);
         Player presidentialCandidate = underTest.getPresidentialCandidate();
         assertThat(presidentialCandidate, is(nextCandidate));
+    }
+
+    @Test(expected = InvalidNomination.class)
+    public void shouldNotBeAbleToNominateYourselfForChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerOne);
     }
 }

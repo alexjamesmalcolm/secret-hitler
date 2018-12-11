@@ -1,9 +1,7 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
-import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
-import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
-import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
+import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.*;
 
@@ -91,7 +89,10 @@ public class Game {
         }
     }
 
-    public void nominateAsChancellor(Player player) {
+    public void nominateAsChancellor(Player player) throws InvalidNomination {
+        if (presidentialCandidate.equals(player)) {
+            throw new InvalidNomination();
+        }
         chancellorNominee = player;
     }
 
@@ -101,10 +102,11 @@ public class Game {
         if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
             president = presidentialCandidate;
             int index = players.indexOf(presidentialCandidate);
-            if (index == players.size()) {
-                index = -1;
+            try {
+                presidentialCandidate = players.get(index + 1);
+            } catch(IndexOutOfBoundsException e) {
+                presidentialCandidate = players.get(0);
             }
-            presidentialCandidate = players.get(index + 1);
         }
     }
 
