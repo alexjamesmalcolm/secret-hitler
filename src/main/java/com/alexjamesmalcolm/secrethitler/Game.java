@@ -13,6 +13,7 @@ public class Game {
     private Collection<Player> playersThatVotedYes = new ArrayList<>();
     private Collection<Player> playersThatVotedNo = new ArrayList<>();
     private Player president;
+    private int failedElectionsUntilShutdown = 3;
 
     public void addPlayer(Player player) throws GameFullOfPlayers {
         if (players.size() == 10) {
@@ -100,19 +101,19 @@ public class Game {
         chancellorNominee = player;
     }
 
-    public void voteYes(Player voter) {
+    public void voteYes(Player voter) throws GovernmentShutdown {
         playersThatVotedYes.add(voter);
         playersThatVotedNo.remove(voter);
         voteHelper();
     }
 
-    public void voteNo(Player voter) {
+    public void voteNo(Player voter) throws GovernmentShutdown {
         playersThatVotedNo.add(voter);
         playersThatVotedYes.remove(voter);
         voteHelper();
     }
 
-    private void voteHelper() {
+    private void voteHelper() throws GovernmentShutdown {
         if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
             president = presidentialCandidate;
             int index = players.indexOf(presidentialCandidate);
@@ -121,8 +122,15 @@ public class Game {
             } catch (IndexOutOfBoundsException e) {
                 presidentialCandidate = players.get(0);
             }
-            chancellorNominee.limitTerm();
-            president.limitTerm();
+            if (playersThatVotedYes.size() > playersThatVotedNo.size()) {
+                chancellorNominee.limitTerm();
+                president.limitTerm();
+            } else {
+                failedElectionsUntilShutdown -= 1;
+            }
+            if (failedElectionsUntilShutdown == 0) {
+                throw new GovernmentShutdown();
+            }
         }
     }
 
@@ -149,6 +157,6 @@ public class Game {
     }
 
     public int getFailedElectionsUntilShutdown() {
-        return 2;
+        return failedElectionsUntilShutdown;
     }
 }
