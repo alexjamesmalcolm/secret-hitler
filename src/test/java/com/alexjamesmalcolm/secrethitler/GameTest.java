@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
@@ -206,5 +207,136 @@ public class GameTest {
         underTest.addPlayer(playerTen);
         Player playerEleven = new Player();
         underTest.addPlayer(playerEleven);
+    }
+
+    @Test
+    public void shouldHavePlayerOneBeFirstPresidentialCandidate() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        System.out.println(underTest.getPlayers());
+        Player candidate = underTest.getPresidentialCandidate();
+        assertThat(candidate, is(playerOne));
+    }
+
+    @Test
+    public void shouldElectPlayerOneAsPresidentAndPlayerTwoAsChancellor() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteNo(playerFive);
+        Optional<Player> potentialPresident = underTest.getPresident();
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialPresident.get(), is(playerOne));
+        assertThat(potentialChancellor.get(), is(playerTwo));
+    }
+
+    @Test
+    public void shouldHaveNoElectedOfficialsIfVoteWasMajorityNo() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteNo(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteNo(playerFive);
+        Optional<Player> potentialPresident = underTest.getPresident();
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialPresident.isPresent(), is(false));
+        assertThat(potentialChancellor.isPresent(), is(false));
+    }
+
+    @Test
+    public void shouldHaveNoElectedOfficialsIfVoteThatWasYesWasChangedToBeNo() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteNo(playerThree);
+        underTest.voteNo(playerFour);
+        Optional<Player> potentialPresident = underTest.getPresident();
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialPresident.isPresent(), is(false));
+        assertThat(potentialChancellor.isPresent(), is(false));
+    }
+
+    @Test
+    public void shouldHaveElectedOfficialsIfVoteThatWasNoWasChangedToBeYes() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteNo(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteYes(playerThree);
+        underTest.voteNo(playerFour);
+        Optional<Player> potentialPresident = underTest.getPresident();
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialPresident.isPresent(), is(true));
+        assertThat(potentialChancellor.isPresent(), is(true));
+    }
+
+    @Test
+    public void shouldHaveNoElectedOfficialsIfVotingIsNotComplete() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        Optional<Player> potentialPresident = underTest.getPresident();
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialPresident.isPresent(), is(false));
+        assertThat(potentialChancellor.isPresent(), is(false));
+    }
+
+    @Test
+    public void shouldHavePresidentialCandidateBePlayerTwoIfElectionFails() throws TooFewPlayersException, GameFullOfPlayers {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        underTest.nominateAsChancellor(playerTwo);
+        underTest.voteNo(playerOne);
+        underTest.voteNo(playerTwo);
+        underTest.voteNo(playerThree);
+        underTest.voteNo(playerFour);
+        underTest.voteNo(playerFive);
+        System.out.println(underTest.getPlayers());
+        Player presidentialCandidate = underTest.getPresidentialCandidate();
+        assertThat(presidentialCandidate, is(playerTwo));
     }
 }

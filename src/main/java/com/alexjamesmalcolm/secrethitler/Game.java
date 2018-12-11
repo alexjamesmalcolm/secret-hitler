@@ -5,26 +5,31 @@ import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
-    private Collection<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private boolean isStarted = false;
+    private Player presidentialCandidate;
+    private Player chancellorNominee;
+    private Collection<Player> playersThatVotedYes = new ArrayList<>();
+    private Collection<Player> playersThatVotedNo = new ArrayList<>();
+    private Player president;
 
     public void addPlayer(Player player) throws GameFullOfPlayers {
         if (players.size() == 10) {
             throw new GameFullOfPlayers();
         }
         if (!isStarted) {
-            this.players.add(player);
+            if (presidentialCandidate == null) {
+                presidentialCandidate = player;
+            }
+            players.add(player);
         }
     }
 
-    public Collection<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -61,7 +66,7 @@ public class Game {
 
     void assignIdentities() {
         try {
-            List<Player> players = (List<Player>) this.players;
+            List<Player> players = getPlayers();
             Collections.shuffle(players);
             Player hitler = players.get(0);
             List<Player> liberals = players.subList(1, 1 + numberOfLiberals());
@@ -84,5 +89,57 @@ public class Game {
         } else {
             throw new GameNotStartedException();
         }
+    }
+
+    public void nominateAsChancellor(Player player) {
+        chancellorNominee = player;
+    }
+
+    public void voteYes(Player voter) {
+        playersThatVotedYes.add(voter);
+        playersThatVotedNo.remove(voter);
+        if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
+            president = presidentialCandidate;
+            int index = players.indexOf(presidentialCandidate);
+            if (index == players.size()) {
+                index = -1;
+            }
+            presidentialCandidate = players.get(index + 1);
+        }
+    }
+
+    public void voteNo(Player voter) {
+        playersThatVotedNo.add(voter);
+        playersThatVotedYes.remove(voter);
+        if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
+            president = presidentialCandidate;
+            int index = players.indexOf(presidentialCandidate);
+            if (index == players.size()) {
+                index = -1;
+            }
+            presidentialCandidate = players.get(index + 1);
+        }
+    }
+
+    public Optional<Player> getPresident() {
+        if (playersThatVotedYes.size() > playersThatVotedNo.size()) {
+            if (playersThatVotedYes.size() + playersThatVotedNo.size() == players.size()) {
+                return Optional.of(president);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Player> getChancellor() {
+        if (playersThatVotedYes.size() > playersThatVotedNo.size()) {
+            if (playersThatVotedYes.size() + playersThatVotedNo.size() == players.size()) {
+                return Optional.of(chancellorNominee);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Player getPresidentialCandidate() {
+        return presidentialCandidate;
     }
 }
