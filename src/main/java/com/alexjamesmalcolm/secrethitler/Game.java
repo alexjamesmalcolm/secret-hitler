@@ -1,5 +1,6 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
 import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
@@ -14,7 +15,10 @@ public class Game {
     private Collection<Player> players = new ArrayList<>();
     private boolean isStarted = false;
 
-    public void addPlayer(Player player) {
+    public void addPlayer(Player player) throws GameFullOfPlayers {
+        if (players.size() == 10) {
+            throw new GameFullOfPlayers();
+        }
         if (!isStarted) {
             this.players.add(player);
         }

@@ -1,5 +1,6 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,14 +33,14 @@ public class GameAssignIdentitiesTest {
         players = Arrays.asList(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine, playerTen);
     }
 
-    private void addPlayers(int numberOfPlayers) {
+    private void addPlayers(int numberOfPlayers) throws GameFullOfPlayers {
         for (int i = 0; i < numberOfPlayers; i++) {
             Player player = players.get(i);
             underTest.addPlayer(player);
         }
     }
 
-    private void actAndAssert(String roleToLookFor, int expectedNumberOfRoles, int numberOfPlayers) {
+    private void actAndAssert(String roleToLookFor, int expectedNumberOfRoles, int numberOfPlayers) throws GameFullOfPlayers {
         addPlayers(numberOfPlayers);
         underTest.assignIdentities();
         int actualNumberOfRoles = (int) players.stream().filter(player -> player.getSecretRole().equals(roleToLookFor)).count();
@@ -47,7 +48,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindThreeLiberalRolesOutOfFivePlayers() {
+    public void shouldFindThreeLiberalRolesOutOfFivePlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 3;
         int numberOfPlayers = 5;
@@ -55,7 +56,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindOneFascistRoleOutOfFivePlayers() {
+    public void shouldFindOneFascistRoleOutOfFivePlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 1;
         int numberOfPlayers = 5;
@@ -63,7 +64,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindFourLiberalRolesOutOfSixPlayers() {
+    public void shouldFindFourLiberalRolesOutOfSixPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 4;
         int numberOfPlayers = 6;
@@ -71,7 +72,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindFourLiberalRolesOutOfSevenPlayers() {
+    public void shouldFindFourLiberalRolesOutOfSevenPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 4;
         int numberOfPlayers = 7;
@@ -79,7 +80,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindFiveLiberalRolesOutOfEightPlayers() {
+    public void shouldFindFiveLiberalRolesOutOfEightPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 5;
         int numberOfPlayers = 8;
@@ -87,7 +88,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindFiveLiberalRolesOutOfNinePlayers() {
+    public void shouldFindFiveLiberalRolesOutOfNinePlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 5;
         int numberOfPlayers = 9;
@@ -95,7 +96,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindSixLiberalRolesOutOfTenPlayers() {
+    public void shouldFindSixLiberalRolesOutOfTenPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "liberal";
         int expectedNumberOfRoles = 6;
         int numberOfPlayers = 10;
@@ -103,7 +104,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindOneFascistRoleOutOfSixPlayers() {
+    public void shouldFindOneFascistRoleOutOfSixPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 1;
         int numberOfPlayers = 6;
@@ -111,7 +112,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindTwoFascistRolesOutOfSevenPlayers() {
+    public void shouldFindTwoFascistRolesOutOfSevenPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 2;
         int numberOfPlayers = 7;
@@ -119,7 +120,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindTwoFascistRolesOutOfEightPlayers() {
+    public void shouldFindTwoFascistRolesOutOfEightPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 2;
         int numberOfPlayers = 8;
@@ -127,7 +128,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindThreeFascistRolesOutOfNinePlayers() {
+    public void shouldFindThreeFascistRolesOutOfNinePlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 3;
         int numberOfPlayers = 9;
@@ -135,7 +136,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldFindThreeFascistRolesOutOfTenPlayers() {
+    public void shouldFindThreeFascistRolesOutOfTenPlayers() throws GameFullOfPlayers {
         String roleToLookFor = "fascist";
         int expectedNumberOfRoles = 3;
         int numberOfPlayers = 10;
@@ -143,7 +144,7 @@ public class GameAssignIdentitiesTest {
     }
 
     @Test
-    public void shouldAddSevenPlayers() {
+    public void shouldAddSevenPlayers() throws GameFullOfPlayers {
         addPlayers(7);
         Collection<Player> players = underTest.getPlayers();
         int size = players.size();

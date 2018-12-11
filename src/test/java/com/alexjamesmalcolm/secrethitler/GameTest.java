@@ -1,5 +1,6 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
 import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHavePlayer() {
+    public void shouldHavePlayer() throws GameFullOfPlayers {
         String name = "John";
         Player player = new Player();
         underTest.addPlayer(player);
@@ -46,7 +47,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveManyPlayers() {
+    public void shouldHaveManyPlayers() throws GameFullOfPlayers {
         Player player = new Player();
         Player anotherPlayer = new Player();
         underTest.addPlayer(player);
@@ -56,7 +57,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveThreeLiberalsIfThereAreFivePlayers() {
+    public void shouldHaveThreeLiberalsIfThereAreFivePlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -67,7 +68,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveFourLiberalsIfThereAreSixPlayers() {
+    public void shouldHaveFourLiberalsIfThereAreSixPlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -79,7 +80,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveFiveLiberalsIfThereAreEightPlayers() {
+    public void shouldHaveFiveLiberalsIfThereAreEightPlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -93,7 +94,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveSixLiberalsIfThereAreTenPlayers() {
+    public void shouldHaveSixLiberalsIfThereAreTenPlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -109,7 +110,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveTwoFascistsIfThereAreFivePlayers() {
+    public void shouldHaveTwoFascistsIfThereAreFivePlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -120,7 +121,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveThreeFascistsIfThereAreSevenPlayers() {
+    public void shouldHaveThreeFascistsIfThereAreSevenPlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -133,7 +134,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveFourFascistsIfThereAreNinePlayers() {
+    public void shouldHaveFourFascistsIfThereAreNinePlayers() throws GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -148,7 +149,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldNotBeAbleToAddPlayersWhenGameIsStarted() throws TooFewPlayersException {
+    public void shouldNotBeAbleToAddPlayersWhenGameIsStarted() throws TooFewPlayersException, GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -166,7 +167,7 @@ public class GameTest {
     }
 
     @Test(expected = TooFewPlayersException.class)
-    public void shouldNotBeAbleToStartWithFourPlayers() throws TooFewPlayersException {
+    public void shouldNotBeAbleToStartWithFourPlayers() throws TooFewPlayersException, GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -180,7 +181,7 @@ public class GameTest {
     }
 
     @Test
-    public void shouldHaveBoardAfterGameStarts() throws GameNotStartedException, TooFewPlayersException {
+    public void shouldHaveBoardAfterGameStarts() throws GameNotStartedException, TooFewPlayersException, GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -189,5 +190,21 @@ public class GameTest {
         underTest.start();
         Board board = underTest.getBoard();
         assertThat(board, notNullValue());
+    }
+
+    @Test(expected = GameFullOfPlayers.class)
+    public void shouldNotBeAbleToAddElevenPlayers() throws GameFullOfPlayers {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.addPlayer(playerSix);
+        underTest.addPlayer(playerSeven);
+        underTest.addPlayer(playerEight);
+        underTest.addPlayer(playerNine);
+        underTest.addPlayer(playerTen);
+        Player playerEleven = new Player();
+        underTest.addPlayer(playerEleven);
     }
 }
