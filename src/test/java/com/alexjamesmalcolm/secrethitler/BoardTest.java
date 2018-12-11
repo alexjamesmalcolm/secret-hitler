@@ -145,4 +145,30 @@ public class BoardTest {
         }
     	underTest.place(new FascistPolicy());
     }
+    
+    @Test(expected = Execution.class)
+    public void shouldThrowExecutionWhenThereAreNinePlayersAndTheFifthFascistPolicyHasBeenPlaced() throws Victory, PresidentialPower {
+    	underTest = new Board(playerOne, playerTwo, playerThree, playerFour, playerFive, playerSix, playerSeven, playerEight, playerNine);
+    	try {
+        	underTest.place(new FascistPolicy());
+        } catch (PresidentialPower e) {
+        	//Handled
+        }
+    	try {
+        	underTest.place(new FascistPolicy());
+        } catch (PresidentialPower e) {
+        	//Handled
+        }
+    	try {
+        	underTest.place(new FascistPolicy());
+        } catch (PresidentialPower e) {
+        	//Handled
+        }
+    	try {
+        	underTest.place(new FascistPolicy());
+        } catch (PresidentialPower e) {
+        	//Handled
+        }
+    	underTest.place(new FascistPolicy());
+    }
 }
