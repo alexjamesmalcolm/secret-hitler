@@ -89,6 +89,8 @@ public class Game {
     }
 
     public void nominateAsChancellor(Player player) throws InvalidNomination {
+        playersThatVotedYes.clear();
+        playersThatVotedNo.clear();
         if (presidentialCandidate.equals(player)) {
             throw new InvalidNomination();
         }
@@ -98,6 +100,7 @@ public class Game {
     public void voteYes(Player voter) {
         playersThatVotedYes.add(voter);
         playersThatVotedNo.remove(voter);
+//        System.out.println("Yes: " + playersThatVotedYes.size() + " No: " + playersThatVotedNo.size() + " Players: " + players.size());
         if (playersThatVotedNo.size() + playersThatVotedYes.size() == players.size()) {
             president = presidentialCandidate;
             int index = players.indexOf(presidentialCandidate);

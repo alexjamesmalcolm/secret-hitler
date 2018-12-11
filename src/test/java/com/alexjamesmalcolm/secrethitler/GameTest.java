@@ -363,5 +363,19 @@ public class GameTest {
         underTest.addPlayer(playerFive);
         underTest.start();
         underTest.nominateAsChancellor(playerTwo);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteYes(playerFour);
+        underTest.voteYes(playerFive);
+        assertThat(underTest.getChancellor().isPresent(), is(true));
+        underTest.nominateAsChancellor(playerThree);
+        underTest.voteYes(playerOne);
+        underTest.voteYes(playerTwo);
+        underTest.voteYes(playerThree);
+        underTest.voteYes(playerFour);
+        underTest.voteYes(playerFive);
+        Optional<Player> potentialChancellor = underTest.getChancellor();
+        assertThat(potentialChancellor.get(), is(playerThree));
     }
 }
