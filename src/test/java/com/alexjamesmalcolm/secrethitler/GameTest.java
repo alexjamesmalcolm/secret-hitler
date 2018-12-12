@@ -1,18 +1,17 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.*;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
+import java.util.Collection;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 
 public class GameTest {
 

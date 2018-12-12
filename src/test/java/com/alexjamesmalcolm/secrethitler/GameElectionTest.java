@@ -11,9 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.InvalidNomination;
 import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
+import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 
 public class GameElectionTest {
 	
@@ -352,6 +356,68 @@ public class GameElectionTest {
 	    boolean isPlayerTwoTermLimited = playerTwo.isTermLimited();
 	    assertThat(isPlayerOneTermLimited, is(false));
 	    assertThat(isPlayerTwoTermLimited, is(false));
+	}
+	
+	@Test
+	public void shouldRemoveTermLimitIfPolicyIsPlacedByOtherElectedOfficials() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException {
+		underTest.addPlayer(playerOne);
+	    underTest.addPlayer(playerTwo);
+	    underTest.addPlayer(playerThree);
+	    underTest.addPlayer(playerFour);
+	    underTest.addPlayer(playerFive);
+	    underTest.start();
+	    underTest.nominateAsChancellor(playerTwo);
+	    underTest.voteYes(playerOne);
+	    underTest.voteYes(playerTwo);
+	    underTest.voteYes(playerThree);
+	    underTest.voteYes(playerFour);
+	    underTest.voteYes(playerFive);
+	    underTest.getBoard().place(new LiberalPolicy());
+	    underTest.nominateAsChancellor(playerThree);
+	    underTest.voteYes(playerOne);
+	    underTest.voteYes(playerTwo);
+	    underTest.voteYes(playerThree);
+	    underTest.voteYes(playerFour);
+	    underTest.voteYes(playerFive);
+	    underTest.getBoard().place(new LiberalPolicy());
+	    boolean isPlayerOneTermLimited = playerOne.isTermLimited();
+	    assertThat(isPlayerOneTermLimited, is(false));
+	}
+	
+	@Test
+	public void shouldKeepTermLimitForPresidentWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException {
+		underTest.addPlayer(playerOne);
+	    underTest.addPlayer(playerTwo);
+	    underTest.addPlayer(playerThree);
+	    underTest.addPlayer(playerFour);
+	    underTest.addPlayer(playerFive);
+	    underTest.start();
+	    underTest.nominateAsChancellor(playerTwo);
+	    underTest.voteYes(playerOne);
+	    underTest.voteYes(playerTwo);
+	    underTest.voteYes(playerThree);
+	    underTest.voteYes(playerFour);
+	    underTest.voteYes(playerFive);
+	    underTest.getBoard().place(new LiberalPolicy());
+	    assertThat(playerOne.isTermLimited(), is(true));
+	}
+	
+	@Test
+	public void shouldKeepTermLimitForChancellorWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException {
+		underTest.addPlayer(playerOne);
+	    underTest.addPlayer(playerTwo);
+	    underTest.addPlayer(playerThree);
+	    underTest.addPlayer(playerFour);
+	    underTest.addPlayer(playerFive);
+	    underTest.start();
+	    underTest.nominateAsChancellor(playerTwo);
+	    underTest.voteYes(playerOne);
+	    underTest.voteYes(playerTwo);
+	    underTest.voteYes(playerThree);
+	    underTest.voteYes(playerFour);
+	    underTest.voteYes(playerFive);
+	    underTest.getBoard().place(new LiberalPolicy());
+	    assertThat(playerTwo.isTermLimited(), is(true));
 	}
 
 }

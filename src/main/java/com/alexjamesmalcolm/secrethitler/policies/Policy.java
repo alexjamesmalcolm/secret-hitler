@@ -1,4 +1,4 @@
 package com.alexjamesmalcolm.secrethitler.policies;
 
-public class Policy {
+public abstract class Policy {
 }

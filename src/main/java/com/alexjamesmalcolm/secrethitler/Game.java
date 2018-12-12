@@ -1,8 +1,18 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
-import java.util.*;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.exceptions.GovernmentShutdown;
+import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
+import com.alexjamesmalcolm.secrethitler.exceptions.InvalidNomination;
+import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 
 public class Game {
 
@@ -14,6 +24,7 @@ public class Game {
     private Collection<Player> playersThatVotedNo = new ArrayList<>();
     private Player president;
     private int failedElectionsUntilShutdown = 3;
+	private Board board;
 
     public void addPlayer(Player player) throws GameFullOfPlayers {
         if (players.size() == 10) {
@@ -59,6 +70,7 @@ public class Game {
             throw new TooFewPlayersException();
         }
         isStarted = true;
+        board = new Board(this);
         assignIdentities();
     }
 
@@ -83,7 +95,7 @@ public class Game {
 
     public Board getBoard() throws GameNotStartedException {
         if (isStarted) {
-            return new Board();
+            return board;
         } else {
             throw new GameNotStartedException();
         }

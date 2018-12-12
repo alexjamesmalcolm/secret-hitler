@@ -58,4 +58,8 @@ public class Player {
     public boolean isTermLimited() {
         return termLimited;
     }
+
+	public void removeTermLimit() {
+		termLimited = false;
+	}
 }
