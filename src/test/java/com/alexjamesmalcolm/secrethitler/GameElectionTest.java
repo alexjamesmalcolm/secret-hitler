@@ -307,7 +307,7 @@ public class GameElectionTest {
 	}
 
 	@Test(expected = GovernmentShutdown.class)
-	public void shouldShutDownGovernmentIfThreeElectionsAreFailed() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown {
+	public void shouldShutDownGovernmentIfThreeElectionsAreFailed() throws GovernmentShutdown {
 	    try {
 	        underTest.addPlayer(playerOne);
 	        underTest.addPlayer(playerTwo);
