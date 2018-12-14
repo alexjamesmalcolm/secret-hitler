@@ -118,7 +118,7 @@ public class GameLegislativeJpaTest {
         em.flush();
         em.clear();
         game = gameRepo.findById(id).get();
-        Optional<Player> chancellorNominee = game.getChancellorNominee();
+        Player chancellorNominee = game.getChancellorNominee().get();
         assertThat(chancellorNominee, is(playerTwo));
     }
 
