@@ -22,7 +22,7 @@ public class Game {
     private boolean isStarted = false;
     @OneToOne(cascade = ALL)
     private Player presidentialCandidate;
-    @OneToOne
+    @OneToOne(cascade = ALL)
     private Player chancellorNominee;
     @OneToMany
     private Collection<Player> playersThatVotedYes = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Game {
     private int failedElectionsUntilShutdown = 3;
     @OneToOne(cascade = ALL)
 	private Board board;
-    @OneToMany
+    @OneToMany(cascade = ALL)
     private List<Policy> pile;
     @OneToOne
     private Player chancellor;
@@ -227,6 +227,6 @@ public class Game {
     }
 
     public Optional<Player> getChancellorNominee() {
-        return Optional.empty();
+        return Optional.ofNullable(chancellorNominee);
     }
 }

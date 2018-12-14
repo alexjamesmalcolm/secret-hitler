@@ -1,6 +1,7 @@
 package com.alexjamesmalcolm.secrethitler;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +79,26 @@ public class GameLegislativeJpaTest {
         List<Player> gamesPlayers = game.getPlayers();
         List<Player> reposPlayers = (List<Player>) playerRepo.findAll();
         boolean assertion = gamesPlayers.containsAll(reposPlayers);
+        assertTrue(assertion);
+    }
+
+    @Test
+    public void shouldSaveStartedGame() throws GameFullOfPlayers, TooFewPlayersException {
+        game = new Game();
+        game.addPlayer(new Player("Player One"));
+        game.addPlayer(new Player("Player Two"));
+        game.addPlayer(new Player("Player Three"));
+        game.addPlayer(new Player("Player Four"));
+        game.addPlayer(new Player("Player Five"));
+        game.start();
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Collection<Policy> repoPolicies = (Collection<Policy>) policyRepo.findAll();
+        List<Policy> gamePolicies = game.getDrawPile();
+        boolean assertion = gamePolicies.containsAll(repoPolicies);
         assertTrue(assertion);
     }
 

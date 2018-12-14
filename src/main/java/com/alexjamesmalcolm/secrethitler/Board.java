@@ -34,6 +34,8 @@ public class Board {
     @OneToOne
 	private Game game;
 
+    private Board() {}
+
     public Board(Game game, Player... players) {
     	this.game = game;
         this.players = Arrays.asList(players);
