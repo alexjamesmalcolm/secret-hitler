@@ -5,7 +5,11 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
+import java.util.List;
 
+import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
+import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
+import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -207,5 +211,31 @@ public class GameTest {
         underTest.addPlayer(playerTen);
         Player playerEleven = new Player("Player Eleven");
         underTest.addPlayer(playerEleven);
+    }
+
+    @Test
+    public void shouldHaveElevenFascistPoliciesInDrawPile() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        List<Policy> policies = underTest.getDrawPile();
+        int count = (int) policies.stream().filter(policy -> policy instanceof FascistPolicy).count();
+        assertThat(count, is(11));
+    }
+
+    @Test
+    public void shouldHaveSixLiberalPoliciesInDrawPile() throws GameFullOfPlayers, TooFewPlayersException {
+        underTest.addPlayer(playerOne);
+        underTest.addPlayer(playerTwo);
+        underTest.addPlayer(playerThree);
+        underTest.addPlayer(playerFour);
+        underTest.addPlayer(playerFive);
+        underTest.start();
+        List<Policy> policies = underTest.getDrawPile();
+        int count = (int) policies.stream().filter(policy -> policy instanceof LiberalPolicy).count();
+        assertThat(count, is(6));
     }
 }

@@ -16,10 +16,22 @@ import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Board {
 
+    @Id
+    private long id;
+
+    @OneToMany
     Collection<Player> players;
+    @OneToMany
     List<Policy> policies = new ArrayList<>();
+    @OneToOne
 	private Game game;
 
     public Board(Game game, Player... players) {
