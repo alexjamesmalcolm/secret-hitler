@@ -3,14 +3,31 @@ package com.alexjamesmalcolm.secrethitler;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 public class Player {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return getId() == player.getId();
+    }
+
+    private long getId() {
+        return id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Id
     @GeneratedValue
@@ -20,8 +37,12 @@ public class Player {
     private String role;
     private String party;
     private boolean termLimited;
-    @OneToMany
+
+    @OneToMany(cascade = ALL)
     private List<Policy> hand;
+
+    @ManyToOne
+    private Game game;
 
     Player() {}
 
@@ -89,6 +110,12 @@ public class Player {
     }
 
     public void giveTwoCardsToChancellor(Policy firstPolicy, Policy secondPolicy) {
+        Policy discardedPolicy = hand.stream().filter(policy -> !policy.equals(firstPolicy) && !policy.equals(secondPolicy)).findFirst().get();
+        game.giveTwoCardsToChancellor(firstPolicy, secondPolicy, discardedPolicy);
+        hand.clear();
+    }
 
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

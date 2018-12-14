@@ -9,6 +9,7 @@ import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
 import javax.persistence.*;
 
+import static java.util.Arrays.asList;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
@@ -17,29 +18,41 @@ public class Game {
     @Id
     private long id;
 
-    @OneToMany(cascade = ALL)
+    @OneToMany(cascade = ALL, mappedBy = "game")
     private List<Player> players = new ArrayList<>();
+
     private boolean isStarted = false;
+
     @OneToOne(cascade = ALL)
     private Player presidentialCandidate;
+
     @OneToOne(cascade = ALL)
     private Player chancellorNominee;
+
     @OneToMany
     private Collection<Player> playersThatVotedYes = new ArrayList<>();
+
     @OneToMany
     private Collection<Player> playersThatVotedNo = new ArrayList<>();
-    @OneToOne
+
+    @OneToOne(cascade = ALL)
     private Player president;
+
     private int failedElectionsUntilShutdown = 3;
+
     @OneToOne(cascade = ALL)
 	private Board board;
+
     @OneToMany(cascade = ALL)
     private List<Policy> pile;
+
     @OneToOne
     private Player chancellor;
 
-    public Game() {
-    }
+    @OneToMany(cascade = ALL)
+    private List<Policy> discardedPile = new ArrayList<>();
+
+    public Game() {}
 
     public void addPlayer(Player player) throws GameFullOfPlayers {
         if (players.size() == 10) {
@@ -50,6 +63,7 @@ public class Game {
                 presidentialCandidate = player;
             }
             players.add(player);
+            player.setGame(this);
         }
     }
 
@@ -134,33 +148,39 @@ public class Game {
         }
     }
 
-    public void nominateAsChancellor(Player player) throws InvalidNomination {
+    public void nominateAsChancellor(Player player) throws InvalidNomination, PlayerNotInGame {
+        if (!players.contains(player)) {
+            throw new PlayerNotInGame();
+        }
         if (presidentialCandidate.equals(player)) {
-            throw new InvalidNomination();
+            throw new InvalidNomination("Player(" + player.toString() + ") is already the Presidential Candidate(" + presidentialCandidate.toString() + ")");
         }
         if (player.isTermLimited()) {
-            throw new InvalidNomination();
+            throw new InvalidNomination("Player(" + player.toString() + ") is term limited.");
         }
         playersThatVotedYes.clear();
         playersThatVotedNo.clear();
         chancellorNominee = player;
     }
 
-    public void voteYes(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination {
-        preVoteHelper();
+    public void voteYes(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+        preVoteHelper(voter);
         playersThatVotedYes.add(voter);
         playersThatVotedNo.remove(voter);
         postVoteHelper();
     }
 
-    public void voteNo(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination {
-        preVoteHelper();
+    public void voteNo(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+        preVoteHelper(voter);
         playersThatVotedNo.add(voter);
         playersThatVotedYes.remove(voter);
         postVoteHelper();
     }
 
-    private void preVoteHelper() throws OutstandingChancellorNomination {
+    private void preVoteHelper(Player voter) throws OutstandingChancellorNomination, PlayerNotInGame {
+        if (!players.contains(voter)) {
+            throw new PlayerNotInGame();
+        }
         if (chancellorNominee == null) {
             throw new OutstandingChancellorNomination();
         }
@@ -210,16 +230,21 @@ public class Game {
     }
 
     public List<Policy> drawThreeCards() {
+        System.out.println(pile.size());
         List<Policy> drawnCards = new ArrayList<>();
         drawnCards.add(pile.get(0));
-        drawnCards.add(pile.get(1));
-        drawnCards.add(pile.get(2));
-        pile.removeAll(drawnCards);
+        pile.remove(0);
+        drawnCards.add(pile.get(0));
+        pile.remove(0);
+        drawnCards.add(pile.get(0));
+        pile.remove(0);
+        System.out.println(drawnCards.size());
+        System.out.println(pile.size());
         return drawnCards;
     }
 
     public List<Policy> getDiscardedPile() {
-        return null;
+        return discardedPile;
     }
 
     public long getId() {
@@ -228,5 +253,10 @@ public class Game {
 
     public Optional<Player> getChancellorNominee() {
         return Optional.ofNullable(chancellorNominee);
+    }
+
+    public void giveTwoCardsToChancellor(Policy firstPolicy, Policy secondPolicy, Policy discardedPolicy) {
+//        chancellor.giveCards(asList(firstPolicy, secondPolicy));
+        discardedPile.add(discardedPolicy);
     }
 }

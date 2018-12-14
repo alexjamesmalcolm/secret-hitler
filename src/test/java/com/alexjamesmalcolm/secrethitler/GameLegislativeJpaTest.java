@@ -103,14 +103,20 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldSaveChancellorNominee() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination {
+    public void shouldSaveChancellorNominee() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame {
         game = new Game();
         playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
         game.addPlayer(new Player("Player One"));
+        game = gameRepo.save(game);
         game.addPlayer(playerTwo);
+        game = gameRepo.save(game);
         game.addPlayer(new Player("Player Three"));
+        game = gameRepo.save(game);
         game.addPlayer(new Player("Player Four"));
+        game = gameRepo.save(game);
         game.addPlayer(new Player("Player Five"));
+        game = gameRepo.save(game);
         game.start();
         game.nominateAsChancellor(playerTwo);
         game = gameRepo.save(game);
@@ -123,31 +129,197 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldHavePresidentsUnpickedCardEnterDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination {
-//        game = new Game();
-//        game = gameRepo.save(game);
-//        game.addPlayer(new Player("Player One"));
-//        game.addPlayer(new Player("Player Two"));
-//        game.addPlayer(new Player("Player Three"));
-//        game.addPlayer(new Player("Player Four"));
-//        game.addPlayer(new Player("Player Five"));
-//        em.flush();
-//        em.clear();
-//        underTest.start();
-//        underTest.nominateAsChancellor(playerTwo);
-//        underTest.voteYes(playerOne);
-//        underTest.voteYes(playerTwo);
-//        underTest.voteYes(playerThree);
-//        underTest.voteYes(playerFour);
-//        underTest.voteYes(playerFive);
-//        Player president = underTest.getPresident().get();
-//        List<Policy> policies = president.getPolicyHand();
-//        Policy firstPolicy = policies.get(0);
-//        Policy secondPolicy = policies.get(1);
-//        Policy discardedPolicy = policies.get(2);
-//        president.giveTwoCardsToChancellor(firstPolicy, secondPolicy);
-//        List<Policy> discardedPolicies = underTest.getDiscardedPile();
-//        boolean assertion = discardedPolicies.contains(discardedPolicy);
-//        assertTrue(assertion);
+    public void shouldHavePresidentsUnpickedCardEnterDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Player president = game.getPresident().get();
+        List<Policy> hand = president.getPolicyHand();
+        Policy firstPolicy = hand.get(0);
+        Policy secondPolicy = hand.get(1);
+        Policy discardedPolicy = hand.get(2);
+        president.giveTwoCardsToChancellor(firstPolicy, secondPolicy);
+        List<Policy> discardedPolicies = game.getDiscardedPile();
+        boolean assertion = discardedPolicies.contains(discardedPolicy);
+        assertTrue(assertion);
+    }
+
+    @Test
+    public void shouldHaveDiscardedCardsBeSaved() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Player president = game.getPresident().get();
+        List<Policy> hand = president.getPolicyHand();
+        Policy firstPolicy = hand.get(1);
+        Policy secondPolicy = hand.get(2);
+        Policy discardedPolicy = hand.get(0);
+        president.giveTwoCardsToChancellor(firstPolicy, secondPolicy);
+        game = gameRepo.save(game);
+        id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        List<Policy> discardedPolicies = game.getDiscardedPile();
+        boolean assertion = discardedPolicies.contains(discardedPolicy);
+        System.out.println(discardedPolicy);
+        System.out.println(discardedPolicies);
+        assertTrue(assertion);
+    }
+
+    @Test
+    public void shouldHaveDrawPileBeSeventeenCards() throws GameFullOfPlayers, TooFewPlayersException {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        List<Policy> cards = game.getDrawPile();
+        assertThat(cards.size(), is(17));
+    }
+
+    @Test
+    public void shouldHaveDrawPileBeFourteenCardsAfterSomeoneIsElectedPresident() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        List<Policy> cards = game.getDrawPile();
+        cards.forEach(System.out::println);
+        assertThat(cards.size(), is(14));
+    }
+
+    @Test
+    public void shouldRemoveCardsFromHandWhenPresidentGivesThemToChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Player president = game.getPresident().get();
+        List<Policy> hand = president.getPolicyHand();
+        Policy firstPolicy = hand.get(0);
+        Policy secondPolicy = hand.get(1);
+        president.giveTwoCardsToChancellor(firstPolicy, secondPolicy);
+        gameRepo.save(game);
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        hand = game.getPresident().get().getPolicyHand();
+        assertThat(hand.size(), is(0));
     }
 }

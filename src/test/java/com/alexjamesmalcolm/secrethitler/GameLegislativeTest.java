@@ -73,7 +73,7 @@ public class GameLegislativeTest {
     }
 
     @Test
-    public void shouldHavePresidentAutoDrawCardsWhenElected() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, InvalidNomination {
+    public void shouldHavePresidentAutoDrawCardsWhenElected() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, InvalidNomination, PlayerNotInGame {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -94,7 +94,7 @@ public class GameLegislativeTest {
     }
 
     @Test
-    public void shouldHavePresidentHaveThreeCards() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination {
+    public void shouldHavePresidentHaveThreeCards() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
