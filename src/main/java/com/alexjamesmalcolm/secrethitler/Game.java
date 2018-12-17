@@ -253,7 +253,7 @@ public class Game {
     }
 
     public void giveTwoCardsToChancellor(Policy firstPolicy, Policy secondPolicy, Policy discardedPolicy) {
-//        chancellor.giveCards(asList(firstPolicy, secondPolicy));
+        chancellor.giveCards(asList(firstPolicy, secondPolicy));
         discardedPile.add(discardedPolicy);
     }
 }

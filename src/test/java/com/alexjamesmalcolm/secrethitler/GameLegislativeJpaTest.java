@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -350,6 +351,50 @@ public class GameLegislativeJpaTest {
         System.out.println("Draw Pile");
         drawPile.forEach(System.out::println);
         boolean assertion = !drawPile.containsAll(threeDrawCards);
+        assertTrue(assertion);
+    }
+
+    @Test
+    public void shouldGiveCardsToChancellorAfterPresidentPicks() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        game = gameRepo.save(game);
+        long id = game.getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Player president = game.getPresident().get();
+        List<Policy> hand = president.getPolicyHand();
+        Policy firstPolicy = hand.get(0);
+        Policy secondPolicy = hand.get(1);
+        president.giveTwoCardsToChancellor(firstPolicy, secondPolicy);
+        gameRepo.save(game);
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        hand = game.getChancellor().get().getPolicyHand();
+        boolean assertion = hand.containsAll(asList(firstPolicy, secondPolicy));
         assertTrue(assertion);
     }
 }
