@@ -1,7 +1,6 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
-import com.alexjamesmalcolm.secrethitler.game.Player;
 import org.junit.Before;
 import org.junit.Test;
 

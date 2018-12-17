@@ -1,4 +1,4 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;

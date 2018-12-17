@@ -1,9 +1,13 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
+import com.alexjamesmalcolm.secrethitler.Board;
+import com.alexjamesmalcolm.secrethitler.GameRepository;
+import com.alexjamesmalcolm.secrethitler.PlayerRepository;
+import com.alexjamesmalcolm.secrethitler.PolicyRepository;
 import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
-import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
 import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.hamcrest.Matchers;
 import org.junit.Test;

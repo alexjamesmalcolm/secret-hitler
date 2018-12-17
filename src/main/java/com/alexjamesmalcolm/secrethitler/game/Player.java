@@ -1,12 +1,11 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
+import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.exceptions.NotChancellorCannotPlacePolicies;
 import com.alexjamesmalcolm.secrethitler.exceptions.NotOwnerOfPolicy;
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
-import com.alexjamesmalcolm.secrethitler.game.Game;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
 import javax.persistence.*;

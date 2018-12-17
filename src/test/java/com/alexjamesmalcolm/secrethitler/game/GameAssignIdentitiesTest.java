@@ -1,4 +1,4 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
 import org.junit.Before;

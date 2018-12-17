@@ -1,21 +1,21 @@
-package com.alexjamesmalcolm.secrethitler;
+package com.alexjamesmalcolm.secrethitler.game;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.Collection;
-import java.util.List;
-
+import com.alexjamesmalcolm.secrethitler.Board;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
-import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
-import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
+import java.util.Collection;
+import java.util.List;
+
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class GameTest {
 

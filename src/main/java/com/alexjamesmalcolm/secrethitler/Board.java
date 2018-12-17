@@ -1,10 +1,5 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.Execution;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.InvestigateLoyalty;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
@@ -12,6 +7,8 @@ import com.alexjamesmalcolm.secrethitler.events.presidentialpower.SpecialElectio
 import com.alexjamesmalcolm.secrethitler.events.victories.FascistsWin;
 import com.alexjamesmalcolm.secrethitler.events.victories.LiberalsWin;
 import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.game.Game;
+import com.alexjamesmalcolm.secrethitler.game.Player;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
@@ -20,6 +17,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Board {

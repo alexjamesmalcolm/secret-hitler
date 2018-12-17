@@ -1,20 +1,19 @@
-package com.alexjamesmalcolm.secrethitler;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-import java.util.Optional;
+package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
+import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
-import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
+import java.util.List;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class GameElectionTest {
 	

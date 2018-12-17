@@ -1,8 +1,5 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.Execution;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.InvestigateLoyalty;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
@@ -10,9 +7,13 @@ import com.alexjamesmalcolm.secrethitler.events.presidentialpower.SpecialElectio
 import com.alexjamesmalcolm.secrethitler.events.victories.FascistsWin;
 import com.alexjamesmalcolm.secrethitler.events.victories.LiberalsWin;
 import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.game.Game;
+import com.alexjamesmalcolm.secrethitler.game.Player;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import org.junit.Before;
+import org.junit.Test;
 
 public class BoardTest {
 
