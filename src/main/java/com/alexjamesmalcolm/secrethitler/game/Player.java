@@ -6,6 +6,7 @@ import com.alexjamesmalcolm.secrethitler.exceptions.NotChancellorCannotPlacePoli
 import com.alexjamesmalcolm.secrethitler.exceptions.NotOwnerOfPolicy;
 import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
 import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.game.Game;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
 import javax.persistence.*;
