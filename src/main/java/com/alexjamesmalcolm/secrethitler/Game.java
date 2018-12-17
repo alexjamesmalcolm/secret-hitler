@@ -256,4 +256,8 @@ public class Game {
         chancellor.giveCards(asList(firstPolicy, secondPolicy));
         discardedPile.add(discardedPolicy);
     }
+
+    public void discardCard(Policy policy) {
+        discardedPile.add(policy);
+    }
 }

@@ -28,9 +28,9 @@ public class Board {
     private long id;
 
     @OneToMany
-    Collection<Player> players;
+    private Collection<Player> players;
     @OneToMany
-    List<Policy> policies = new ArrayList<>();
+    private List<Policy> policies = new ArrayList<>();
     @OneToOne
 	private Game game;
 
@@ -74,5 +74,9 @@ public class Board {
         game.getChancellor().ifPresent(chancellor -> {
         	chancellor.limitTerm();
         });
+    }
+
+    public List<Policy> getPolicies() {
+        return policies;
     }
 }

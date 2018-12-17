@@ -1,9 +1,15 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
+import com.alexjamesmalcolm.secrethitler.exceptions.NotChancellorCannotPlacePolicies;
+import com.alexjamesmalcolm.secrethitler.exceptions.NotOwnerOfPolicy;
+import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +50,7 @@ public class Player {
     @ManyToOne
     private Game game;
 
-    Player() {}
+    private Player() {}
 
     Player(long id) {
         this("Player with id " + id);
@@ -111,7 +117,7 @@ public class Player {
     }
 
     public void giveCards(List<Policy> policies) {
-        hand = policies;
+        hand = new LinkedList<>(policies);
     }
 
     public void giveTwoCardsToChancellor(Policy firstPolicy, Policy secondPolicy) {
@@ -122,5 +128,18 @@ public class Player {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void placeOnBoard(Policy policy) throws GameNotStartedException, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies {
+        if (!game.getChancellor().get().equals(this)) {
+            throw new NotChancellorCannotPlacePolicies();
+        }
+        if (!hand.contains(policy)) {
+            throw new NotOwnerOfPolicy();
+        }
+        game.getBoard().place(policy);
+        hand.remove(policy);
+        hand.forEach(p -> game.discardCard(p));
+        hand.clear();
     }
 }
