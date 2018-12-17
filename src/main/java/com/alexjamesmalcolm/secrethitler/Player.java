@@ -4,8 +4,8 @@ import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
 import com.alexjamesmalcolm.secrethitler.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.exceptions.NotChancellorCannotPlacePolicies;
 import com.alexjamesmalcolm.secrethitler.exceptions.NotOwnerOfPolicy;
-import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 
 import javax.persistence.*;

@@ -1,8 +1,9 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
-import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.hamcrest.Matchers;
 import org.junit.Test;

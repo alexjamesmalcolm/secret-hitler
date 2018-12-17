@@ -2,6 +2,7 @@ package com.alexjamesmalcolm.secrethitler;
 
 import java.util.*;
 
+import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;

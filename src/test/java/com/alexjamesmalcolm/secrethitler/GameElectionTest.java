@@ -6,13 +6,14 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 import java.util.Optional;
 
+import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.exceptions.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 
 public class GameElectionTest {

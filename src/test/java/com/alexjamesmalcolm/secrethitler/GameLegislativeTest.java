@@ -1,5 +1,6 @@
 package com.alexjamesmalcolm.secrethitler;
 
+import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.junit.Before;
