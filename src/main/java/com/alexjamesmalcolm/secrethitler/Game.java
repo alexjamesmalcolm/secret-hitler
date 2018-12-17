@@ -230,7 +230,6 @@ public class Game {
     }
 
     public List<Policy> drawThreeCards() {
-        System.out.println(pile.size());
         List<Policy> drawnCards = new ArrayList<>();
         drawnCards.add(pile.get(0));
         pile.remove(0);
@@ -238,8 +237,6 @@ public class Game {
         pile.remove(0);
         drawnCards.add(pile.get(0));
         pile.remove(0);
-        System.out.println(drawnCards.size());
-        System.out.println(pile.size());
         return drawnCards;
     }
 

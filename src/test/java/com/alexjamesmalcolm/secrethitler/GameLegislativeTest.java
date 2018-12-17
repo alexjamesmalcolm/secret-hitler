@@ -24,11 +24,11 @@ public class GameLegislativeTest {
     @Before
     public void setup() {
         underTest = new Game();
-        playerOne = new Player("Player One");
-        playerTwo = new Player("Player Two");
-        playerThree = new Player("Player Three");
-        playerFour = new Player("Player Four");
-        playerFive = new Player("Player Five");
+        playerOne = new Player(0);
+        playerTwo = new Player(1);
+        playerThree = new Player(2);
+        playerFour = new Player(3);
+        playerFive = new Player(4);
     }
 
     @Test
@@ -55,20 +55,6 @@ public class GameLegislativeTest {
         List<Policy> drawPile = new LinkedList<>(underTest.getDrawPile());
         List<Policy> threeDrawCards = underTest.drawThreeCards();
         boolean assertion = drawPile.containsAll(threeDrawCards);
-        assertTrue(assertion);
-    }
-
-    @Test
-    public void shouldRemoveDrawnCardsFromTheDrawPileAfterDrawing() throws GameFullOfPlayers, TooFewPlayersException {
-        underTest.addPlayer(playerOne);
-        underTest.addPlayer(playerTwo);
-        underTest.addPlayer(playerThree);
-        underTest.addPlayer(playerFour);
-        underTest.addPlayer(playerFive);
-        underTest.start();
-        List<Policy> threeDrawCards = underTest.drawThreeCards();
-        List<Policy> drawPile = underTest.getDrawPile();
-        boolean assertion = !drawPile.containsAll(threeDrawCards);
         assertTrue(assertion);
     }
 

@@ -32,12 +32,12 @@ public class GameElectionTest {
     @Before
     public void setup() {
         underTest = new Game();
-        playerOne = new Player("Player One");
-        playerTwo = new Player("Player Two");
-        playerThree = new Player("Player Three");
-        playerFour = new Player("Player Four");
-        playerFive = new Player("Player Five");
-        playerSix = new Player("Player Six");
+        playerOne = new Player(0);
+        playerTwo = new Player(1);
+        playerThree = new Player(2);
+        playerFour = new Player(3);
+        playerFive = new Player(4);
+        playerSix = new Player(5);
     }
 
 	@Test

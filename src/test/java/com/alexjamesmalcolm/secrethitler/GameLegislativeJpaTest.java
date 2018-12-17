@@ -212,8 +212,6 @@ public class GameLegislativeJpaTest {
         game = gameRepo.findById(id).get();
         List<Policy> discardedPolicies = game.getDiscardedPile();
         boolean assertion = discardedPolicies.contains(discardedPolicy);
-        System.out.println(discardedPolicy);
-        System.out.println(discardedPolicies);
         assertTrue(assertion);
     }
 
@@ -276,7 +274,6 @@ public class GameLegislativeJpaTest {
         em.clear();
         game = gameRepo.findById(id).get();
         List<Policy> cards = game.getDrawPile();
-        cards.forEach(System.out::println);
         assertThat(cards.size(), is(14));
     }
 
@@ -321,5 +318,38 @@ public class GameLegislativeJpaTest {
         game = gameRepo.findById(id).get();
         hand = game.getPresident().get().getPolicyHand();
         assertThat(hand.size(), is(0));
+    }
+
+    @Test
+    public void shouldRemoveDrawnCardsFromTheDrawPileAfterDrawing() throws GameFullOfPlayers, TooFewPlayersException {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        long id = gameRepo.save(game).getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        List<Policy> threeDrawCards = game.drawThreeCards();
+        System.out.println("Three draw cards");
+        threeDrawCards.forEach(System.out::println);
+        List<Policy> drawPile = game.getDrawPile();
+        System.out.println("Draw Pile");
+        drawPile.forEach(System.out::println);
+        boolean assertion = !drawPile.containsAll(threeDrawCards);
+        assertTrue(assertion);
     }
 }

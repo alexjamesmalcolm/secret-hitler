@@ -34,10 +34,10 @@ public class Player {
     private long id;
 
     private String name;
+
     private String role;
     private String party;
     private boolean termLimited;
-
     @OneToMany(cascade = ALL)
     private List<Policy> hand;
 
@@ -45,6 +45,11 @@ public class Player {
     private Game game;
 
     Player() {}
+
+    Player(long id) {
+        this("Player with id " + id);
+        this.id = id;
+    }
 
     public Player(String name) {
         this.name = name;
