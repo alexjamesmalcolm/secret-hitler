@@ -8,11 +8,10 @@ import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
 import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.PresidentPickingPoliciesState;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -58,6 +57,8 @@ public class Game {
 
     @OneToMany(cascade = ALL)
     private List<Policy> discardedPile = new ArrayList<>();
+
+    private Class state;
 
     public Game() {}
 
@@ -157,7 +158,10 @@ public class Game {
         }
     }
 
-    public void nominateAsChancellor(Player player) throws InvalidNomination, PlayerNotInGame {
+    public void nominateAsChancellor(Player player) throws InvalidNomination, PlayerNotInGame, PresidentPickingPoliciesState {
+        if (isState(PresidentPickingPoliciesState.class)) {
+            throw new PresidentPickingPoliciesState();
+        }
         if (!players.contains(player)) {
             throw new PlayerNotInGame();
         }
@@ -170,6 +174,13 @@ public class Game {
         playersThatVotedYes.clear();
         playersThatVotedNo.clear();
         chancellorNominee = player;
+    }
+
+    private boolean isState(Class state) {
+        if (this.state == null) {
+            return false;
+        }
+        return this.state.equals(state);
     }
 
     public void voteYes(Player voter) throws GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
@@ -204,6 +215,7 @@ public class Game {
                 president.limitTerm();
                 chancellor.limitTerm();
                 president.giveCards(drawThreeCards());
+                state = PresidentPickingPoliciesState.class;
             } else {
                 failedElectionsUntilShutdown -= 1;
             }
@@ -277,5 +289,9 @@ public class Game {
         if (index > -1) {
             pile.remove(index);
         }
+    }
+
+    void forceClearState() {
+        state = null;
     }
 }

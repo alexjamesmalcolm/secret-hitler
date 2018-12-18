@@ -4,6 +4,7 @@ import com.alexjamesmalcolm.secrethitler.GameRepository;
 import com.alexjamesmalcolm.secrethitler.PlayerRepository;
 import com.alexjamesmalcolm.secrethitler.PolicyRepository;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -53,4 +54,7 @@ public class PresidentialPowersTest {
         playerNine = new Player("Player Nine");
         playerTen = new Player("Player Ten");
     }
+
+    @Test
+    public void doNothing() {}
 }

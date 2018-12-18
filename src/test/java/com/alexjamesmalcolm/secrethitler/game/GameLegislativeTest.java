@@ -4,6 +4,7 @@ import com.alexjamesmalcolm.secrethitler.throwable.events.GovernmentShutdown;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.PresidentPickingPoliciesState;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,7 +62,7 @@ public class GameLegislativeTest {
     }
 
     @Test
-    public void shouldHavePresidentAutoDrawCardsWhenElected() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, InvalidNomination, PlayerNotInGame {
+    public void shouldHavePresidentAutoDrawCardsWhenElected() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, InvalidNomination, PlayerNotInGame, PresidentPickingPoliciesState {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
@@ -82,7 +83,7 @@ public class GameLegislativeTest {
     }
 
     @Test
-    public void shouldHavePresidentHaveThreeCards() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
+    public void shouldHavePresidentHaveThreeCards() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame, PresidentPickingPoliciesState {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);
