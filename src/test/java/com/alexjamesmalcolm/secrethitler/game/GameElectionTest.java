@@ -1,12 +1,11 @@
 package com.alexjamesmalcolm.secrethitler.game;
 
-import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
-import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import com.alexjamesmalcolm.secrethitler.throwable.events.GovernmentShutdown;
+import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

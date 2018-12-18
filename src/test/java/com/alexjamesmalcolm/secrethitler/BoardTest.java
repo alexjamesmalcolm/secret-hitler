@@ -1,12 +1,12 @@
 package com.alexjamesmalcolm.secrethitler;
 
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.Execution;
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.InvestigateLoyalty;
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPower;
-import com.alexjamesmalcolm.secrethitler.events.presidentialpower.SpecialElection;
-import com.alexjamesmalcolm.secrethitler.events.victories.FascistsWin;
-import com.alexjamesmalcolm.secrethitler.events.victories.LiberalsWin;
-import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
+import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.Execution;
+import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.InvestigateLoyalty;
+import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.PresidentialPower;
+import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.SpecialElection;
+import com.alexjamesmalcolm.secrethitler.throwable.events.victories.FascistsWin;
+import com.alexjamesmalcolm.secrethitler.throwable.events.victories.LiberalsWin;
+import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.game.Game;
 import com.alexjamesmalcolm.secrethitler.game.Player;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;

@@ -1,7 +1,7 @@
 package com.alexjamesmalcolm.secrethitler.game;
 
-import com.alexjamesmalcolm.secrethitler.events.GovernmentShutdown;
-import com.alexjamesmalcolm.secrethitler.exceptions.*;
+import com.alexjamesmalcolm.secrethitler.throwable.events.GovernmentShutdown;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import org.junit.Before;
 import org.junit.Test;

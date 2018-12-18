@@ -1,9 +1,9 @@
 package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.Board;
-import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
-import com.alexjamesmalcolm.secrethitler.exceptions.GameNotStartedException;
-import com.alexjamesmalcolm.secrethitler.exceptions.TooFewPlayersException;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.TooFewPlayersException;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;

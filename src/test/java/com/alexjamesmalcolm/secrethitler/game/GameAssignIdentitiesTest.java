@@ -1,6 +1,6 @@
 package com.alexjamesmalcolm.secrethitler.game;
 
-import com.alexjamesmalcolm.secrethitler.exceptions.GameFullOfPlayers;
+import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameFullOfPlayers;
 import org.junit.Before;
 import org.junit.Test;
 
