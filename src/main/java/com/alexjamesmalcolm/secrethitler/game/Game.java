@@ -6,6 +6,7 @@ import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -170,26 +171,26 @@ public class Game {
         chancellorNominee = player;
     }
 
-    public void voteYes(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+    public void voteYes(Player voter) throws GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
         preVoteHelper(voter);
         playersThatVotedYes.add(voter);
         playersThatVotedNo.remove(voter);
         postVoteHelper();
     }
 
-    public void voteNo(Player voter) throws GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+    public void voteNo(Player voter) throws GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
         preVoteHelper(voter);
         playersThatVotedNo.add(voter);
         playersThatVotedYes.remove(voter);
         postVoteHelper();
     }
 
-    private void preVoteHelper(Player voter) throws OutstandingChancellorNomination, PlayerNotInGame {
+    private void preVoteHelper(Player voter) throws ChancellorNominationState, PlayerNotInGame {
         if (!players.contains(voter)) {
             throw new PlayerNotInGame();
         }
         if (chancellorNominee == null) {
-            throw new OutstandingChancellorNomination();
+            throw new ChancellorNominationState();
         }
     }
 

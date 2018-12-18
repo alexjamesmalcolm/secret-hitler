@@ -6,6 +6,7 @@ import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldElectPlayerOneAsPresidentAndPlayerTwoAsChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldElectPlayerOneAsPresidentAndPlayerTwoAsChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -76,7 +77,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHaveNoElectedOfficialsIfVoteWasMajorityNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHaveNoElectedOfficialsIfVoteWasMajorityNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -96,7 +97,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHaveNoElectedOfficialsIfVoteThatWasYesWasChangedToBeNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHaveNoElectedOfficialsIfVoteThatWasYesWasChangedToBeNo() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -117,7 +118,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHaveElectedOfficialsIfVoteThatWasNoWasChangedToBeYes() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHaveElectedOfficialsIfVoteThatWasNoWasChangedToBeYes() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -138,7 +139,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHaveNoElectedOfficialsIfVotingIsNotComplete() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHaveNoElectedOfficialsIfVotingIsNotComplete() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -155,7 +156,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHavePresidentialCandidateBePlayerTwoIfElectionFails() throws TooFewPlayersException, GameFullOfPlayers, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHavePresidentialCandidateBePlayerTwoIfElectionFails() throws TooFewPlayersException, GameFullOfPlayers, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -186,7 +187,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldResetVotesAfterAnElection() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldResetVotesAfterAnElection() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -223,7 +224,7 @@ public class GameElectionTest {
 	}
 
 	@Test(expected = InvalidNomination.class)
-	public void shouldTermLimitPlayerAfterBeingElectedChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldTermLimitPlayerAfterBeingElectedChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -240,7 +241,7 @@ public class GameElectionTest {
 	}
 
 	@Test(expected = InvalidNomination.class)
-	public void shouldTermLimitPlayerAfterBeingElectedPresident() throws InvalidNomination, GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldTermLimitPlayerAfterBeingElectedPresident() throws InvalidNomination, GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -257,7 +258,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldMoveUpElectionTrackerWhenVoteFails() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldMoveUpElectionTrackerWhenVoteFails() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -287,7 +288,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHaveElectionTrackerStayAtThreeIfElectionPasses() throws InvalidNomination, GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHaveElectionTrackerStayAtThreeIfElectionPasses() throws InvalidNomination, GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -305,7 +306,7 @@ public class GameElectionTest {
 	}
 
 	@Test(expected = GovernmentShutdown.class)
-	public void shouldShutDownGovernmentIfThreeElectionsAreFailed() throws GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldShutDownGovernmentIfThreeElectionsAreFailed() throws GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    try {
 	        underTest.addPlayer(playerOne);
 	        underTest.addPlayer(playerTwo);
@@ -337,7 +338,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldHavePlayersNotBeTermLimitedIfElectionFails() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldHavePlayersNotBeTermLimitedIfElectionFails() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 	    underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -357,7 +358,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldRemoveTermLimitIfPolicyIsPlacedByOtherElectedOfficials() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldRemoveTermLimitIfPolicyIsPlacedByOtherElectedOfficials() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -383,7 +384,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldKeepTermLimitForPresidentWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldKeepTermLimitForPresidentWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -401,7 +402,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldKeepTermLimitForChancellorWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldKeepTermLimitForChancellorWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -418,8 +419,8 @@ public class GameElectionTest {
 	    assertThat(playerTwo.isTermLimited(), is(true));
 	}
 
-	@Test(expected = OutstandingChancellorNomination.class)
-	public void shouldThrowOutStandingChancellorNominationIfPeopleStartVotingWhenAChancellorHasNotBeenNominated() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	@Test(expected = ChancellorNominationState.class)
+	public void shouldThrowOutStandingChancellorNominationIfPeopleStartVotingWhenAChancellorHasNotBeenNominated() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 		underTest.addPlayer(playerTwo);
 		underTest.addPlayer(playerThree);
@@ -429,8 +430,8 @@ public class GameElectionTest {
 		underTest.voteYes(playerOne);
 	}
 
-	@Test(expected = OutstandingChancellorNomination.class)
-	public void shouldThrowOutStandingChancellorNominationIfPeopleVoteNoWhenAChancellorHasNotBeenNominated() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	@Test(expected = ChancellorNominationState.class)
+	public void shouldThrowOutStandingChancellorNominationIfPeopleVoteNoWhenAChancellorHasNotBeenNominated() throws GameFullOfPlayers, TooFewPlayersException, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 		underTest.addPlayer(playerTwo);
 		underTest.addPlayer(playerThree);
@@ -440,8 +441,8 @@ public class GameElectionTest {
 		underTest.voteNo(playerOne);
 	}
 
-	@Test(expected = OutstandingChancellorNomination.class)
-	public void shouldThrowOutstandingChancellorNominationIfPeopleStartVotingBeforeAChancellorHasBeenNominatedButAfterAnElectionAlreadyHappened() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	@Test(expected = ChancellorNominationState.class)
+	public void shouldThrowOutstandingChancellorNominationIfPeopleStartVotingBeforeAChancellorHasBeenNominatedButAfterAnElectionAlreadyHappened() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 		underTest.addPlayer(playerTwo);
 		underTest.addPlayer(playerThree);
@@ -458,7 +459,7 @@ public class GameElectionTest {
 	}
 
 	@Test(expected = PlayerNotInGame.class)
-	public void shouldNotBeAbleToVoteIfNotInGame() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, OutstandingChancellorNomination, PlayerNotInGame {
+	public void shouldNotBeAbleToVoteIfNotInGame() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 		underTest.addPlayer(playerTwo);
 		underTest.addPlayer(playerThree);
@@ -481,7 +482,7 @@ public class GameElectionTest {
 	}
 
 	@Test
-	public void shouldAddDiscardPileToDrawPileWhenDrawPileIsEmpty() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+	public void shouldAddDiscardPileToDrawPileWhenDrawPileIsEmpty() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState {
 		underTest.addPlayer(playerOne);
 		underTest.addPlayer(playerTwo);
 		underTest.addPlayer(playerThree);

@@ -44,7 +44,7 @@ public class GameJpaTest {
 
     //Should shuffle discard pile and draw pile together if there are less than 3 cards in the draw pile
     @Test
-    public void shouldShuffleCardsWhenThereAreNoCardsInTheDrawPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+    public void shouldShuffleCardsWhenThereAreNoCardsInTheDrawPile() throws GameFullOfPlayers, TooFewPlayersException {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
