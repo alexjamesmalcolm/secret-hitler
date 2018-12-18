@@ -49,7 +49,7 @@ public class Game {
 	private Board board;
 
     @OneToMany(cascade = ALL)
-    private LinkedList<Policy> pile;
+    private List<Policy> pile;
 
     @OneToOne
     private Player chancellor;
@@ -232,7 +232,7 @@ public class Game {
         return failedElectionsUntilShutdown;
     }
 
-    public LinkedList<Policy> getDrawPile() {
+    public List<Policy> getDrawPile() {
         return pile;
     }
 
@@ -271,6 +271,9 @@ public class Game {
 
     public void discardCard(Policy policy) {
         discardedPile.add(policy);
-        pile.remove(policy);
+        int index = pile.indexOf(policy);
+        if (index > -1) {
+            pile.remove(index);
+        }
     }
 }

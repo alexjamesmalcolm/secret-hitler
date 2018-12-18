@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -65,7 +66,7 @@ public class GameJpaTest {
         em.flush();
         em.clear();
         game = gameRepo.findById(id).get();
-        game.getDrawPile().forEach(policy -> game.discardCard(policy));
+        new LinkedList<>(game.getDrawPile()).forEach(policy -> game.discardCard(policy));
         List<Policy> drawnCards = game.drawThreeCards();
         assertThat(drawnCards, hasSize(3));
     }
