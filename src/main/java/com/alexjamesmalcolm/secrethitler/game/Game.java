@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import java.util.*;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.shuffle;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
@@ -48,7 +49,7 @@ public class Game {
 	private Board board;
 
     @OneToMany(cascade = ALL)
-    private List<Policy> pile;
+    private LinkedList<Policy> pile;
 
     @OneToOne
     private Player chancellor;
@@ -99,13 +100,14 @@ public class Game {
     }
 
     public void start() throws TooFewPlayersException {
+        // TODO Make the order of presidents random
         if (players.size() < 5) {
             throw new TooFewPlayersException();
         }
         isStarted = true;
         board = new Board(this);
         assignIdentities();
-        pile = new ArrayList<>();
+        pile = new LinkedList<>();
         pile.add(new FascistPolicy());
         pile.add(new FascistPolicy());
         pile.add(new FascistPolicy());
@@ -123,12 +125,13 @@ public class Game {
         pile.add(new LiberalPolicy());
         pile.add(new LiberalPolicy());
         pile.add(new LiberalPolicy());
+        shuffle(pile);
     }
 
     void assignIdentities() {
         try {
             List<Player> players = new LinkedList<>(getPlayers());
-            Collections.shuffle(players);
+            shuffle(players);
             Player hitler = players.get(0);
             List<Player> liberals = players.subList(1, 1 + numberOfLiberals());
             List<Player> fascists = players.subList(1 + numberOfLiberals(), numberOfLiberals() + numberOfFascists());
@@ -229,11 +232,16 @@ public class Game {
         return failedElectionsUntilShutdown;
     }
 
-    public List<Policy> getDrawPile() {
+    public LinkedList<Policy> getDrawPile() {
         return pile;
     }
 
     public List<Policy> drawThreeCards() {
+        if (pile.size() < 3) {
+            pile.addAll(discardedPile);
+            shuffle(pile);
+            discardedPile.clear();
+        }
         List<Policy> drawnCards = new ArrayList<>();
         drawnCards.add(pile.get(0));
         pile.remove(0);
@@ -263,5 +271,6 @@ public class Game {
 
     public void discardCard(Policy policy) {
         discardedPile.add(policy);
+        pile.remove(policy);
     }
 }

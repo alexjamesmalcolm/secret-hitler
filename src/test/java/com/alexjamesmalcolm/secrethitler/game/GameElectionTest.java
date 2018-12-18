@@ -5,13 +5,18 @@ import com.alexjamesmalcolm.secrethitler.events.presidentialpower.PresidentialPo
 import com.alexjamesmalcolm.secrethitler.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
+import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -477,4 +482,59 @@ public class GameElectionTest {
 		underTest.nominateAsChancellor(playerSix);
 	}
 
+	@Test
+	public void shouldAddDiscardPileToDrawPileWhenDrawPileIsEmpty() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, OutstandingChancellorNomination {
+		underTest.addPlayer(playerOne);
+		underTest.addPlayer(playerTwo);
+		underTest.addPlayer(playerThree);
+		underTest.addPlayer(playerFour);
+		underTest.addPlayer(playerFive);
+		underTest.start();
+		new LinkedList<>(underTest.getDrawPile()).forEach(policy -> underTest.discardCard(policy));
+		List<Policy> drawnCards = underTest.drawThreeCards();
+		assertThat(drawnCards, hasSize(3));
+	}
+
+	@Test
+	public void whenCardsAreDiscardedTheyShouldExitTheDrawPile() throws GameFullOfPlayers, TooFewPlayersException {
+		underTest.addPlayer(playerOne);
+		underTest.addPlayer(playerTwo);
+		underTest.addPlayer(playerThree);
+		underTest.addPlayer(playerFour);
+		underTest.addPlayer(playerFive);
+		underTest.start();
+		new LinkedList<>(underTest.getDrawPile()).forEach(policy -> underTest.discardCard(policy));
+		List<Policy> drawPile = underTest.getDrawPile();
+		assertThat(drawPile, hasSize(0));
+	}
+
+	@Test
+	public void whenTheDrawPileIsFilledByTheDiscardPileThatShouldEmptyTheDiscardPile() throws GameFullOfPlayers, TooFewPlayersException {
+		underTest.addPlayer(playerOne);
+		underTest.addPlayer(playerTwo);
+		underTest.addPlayer(playerThree);
+		underTest.addPlayer(playerFour);
+		underTest.addPlayer(playerFive);
+		underTest.start();
+		new LinkedList<>(underTest.getDrawPile()).forEach(policy -> underTest.discardCard(policy));
+		underTest.drawThreeCards();
+		List<Policy> discardPile = underTest.getDiscardedPile();
+		assertThat(discardPile, hasSize(0));
+	}
+
+	@Test
+	public void whenDrawPileHasTwoCardsShouldAddDiscardPileToDrawPile() throws GameFullOfPlayers, TooFewPlayersException {
+		underTest.addPlayer(playerOne);
+		underTest.addPlayer(playerTwo);
+		underTest.addPlayer(playerThree);
+		underTest.addPlayer(playerFour);
+		underTest.addPlayer(playerFive);
+		underTest.start();
+		LinkedList<Policy> drawPile = new LinkedList<>(underTest.getDrawPile());
+		drawPile.remove();
+		drawPile.remove();
+		drawPile.forEach(policy -> underTest.discardCard(policy));
+		List<Policy> drawnCards = underTest.drawThreeCards();
+		assertThat(drawnCards, hasSize(3));
+	}
 }
