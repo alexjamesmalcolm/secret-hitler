@@ -6,13 +6,11 @@ import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
-import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
-import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
-import com.alexjamesmalcolm.secrethitler.throwable.state.GameState;
-import com.alexjamesmalcolm.secrethitler.throwable.state.PresidentPickingPoliciesState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.*;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.shuffle;
@@ -111,23 +109,12 @@ public class Game {
         board = new Board(this);
         assignIdentities();
         pile = new LinkedList<>();
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new FascistPolicy());
-        pile.add(new LiberalPolicy());
-        pile.add(new LiberalPolicy());
-        pile.add(new LiberalPolicy());
-        pile.add(new LiberalPolicy());
-        pile.add(new LiberalPolicy());
-        pile.add(new LiberalPolicy());
+        for (int i = 0; i < 11; i++) {
+            pile.add(new FascistPolicy());
+        }
+        for (int i = 0; i < 6; i++) {
+            pile.add(new LiberalPolicy());
+        }
         shuffle(pile);
     }
 
@@ -158,10 +145,12 @@ public class Game {
         }
     }
 
-    public void nominateAsChancellor(Player player) throws InvalidNomination, PlayerNotInGame, PresidentPickingPoliciesState {
-        if (isState(PresidentPickingPoliciesState.class)) {
-            throw new PresidentPickingPoliciesState();
-        }
+    public void nominateAsChancellor(Player player) throws InvalidNomination, PlayerNotInGame, GameState {
+        try {
+            if (state != null) {
+                throw (GameState) state.newInstance();
+            }
+        } catch (IllegalAccessException | InstantiationException ignored) {}
         if (!players.contains(player)) {
             throw new PlayerNotInGame();
         }
@@ -174,13 +163,6 @@ public class Game {
         playersThatVotedYes.clear();
         playersThatVotedNo.clear();
         chancellorNominee = player;
-    }
-
-    private boolean isState(Class state) {
-        if (this.state == null) {
-            return false;
-        }
-        return this.state.equals(state);
     }
 
     public void voteYes(Player voter) throws GovernmentShutdown, ChancellorNominationState, PlayerNotInGame {
@@ -281,6 +263,7 @@ public class Game {
     public void giveTwoCardsToChancellor(Policy firstPolicy, Policy secondPolicy, Policy discardedPolicy) {
         chancellor.giveCards(asList(firstPolicy, secondPolicy));
         discardedPile.add(discardedPolicy);
+        state = ChancellorPickingPolicyState.class;
     }
 
     public void discardCard(Policy policy) {

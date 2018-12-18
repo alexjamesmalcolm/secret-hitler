@@ -9,9 +9,7 @@ import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.Pres
 import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
-import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
-import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
-import com.alexjamesmalcolm.secrethitler.throwable.state.PresidentPickingPoliciesState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.*;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -113,7 +111,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldSaveChancellorNominee() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, PresidentPickingPoliciesState {
+    public void shouldSaveChancellorNominee() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GameState {
         game = new Game();
         playerTwo = new Player("Player Two");
         playerTwo = playerRepo.save(playerTwo);
@@ -139,7 +137,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldHavePresidentsUnpickedCardEnterDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame, PresidentPickingPoliciesState {
+    public void shouldHavePresidentsUnpickedCardEnterDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, GameState, PlayerNotInGame {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -180,7 +178,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldHaveDiscardedCardsBeSaved() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, ChancellorNominationState, PlayerNotInGame, PresidentPickingPoliciesState {
+    public void shouldHaveDiscardedCardsBeSaved() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, GameState, PlayerNotInGame {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -254,7 +252,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldHaveDrawPileBeFourteenCardsAfterSomeoneIsElectedPresident() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, PresidentPickingPoliciesState {
+    public void shouldHaveDrawPileBeFourteenCardsAfterSomeoneIsElectedPresident() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -288,7 +286,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldRemoveCardsFromHandWhenPresidentGivesThemToChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, PresidentPickingPoliciesState {
+    public void shouldRemoveCardsFromHandWhenPresidentGivesThemToChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -364,7 +362,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldGiveCardsToChancellorAfterPresidentPicks() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, PresidentPickingPoliciesState {
+    public void shouldGiveCardsToChancellorAfterPresidentPicks() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -408,7 +406,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldHaveChancellorPlacePolicyOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, GameNotStartedState, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies, PresidentPickingPoliciesState {
+    public void shouldHaveChancellorPlacePolicyOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -454,7 +452,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test(expected = NotOwnerOfPolicy.class)
-    public void shouldThrowNotOwnerOfPolicyWhenChancellorTriesToPlaceAPolicyThatTheyDoNotHaveInTheirHand() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, Victory, GameNotStartedState, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies, PresidentPickingPoliciesState {
+    public void shouldThrowNotOwnerOfPolicyWhenChancellorTriesToPlaceAPolicyThatTheyDoNotHaveInTheirHand() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -489,7 +487,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldNotAllowPolicyToBePlacedOnBoardIfItWasNotInChancellorsHand() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, GameNotStartedState, Victory, PresidentialPower, PresidentPickingPoliciesState {
+    public void shouldNotAllowPolicyToBePlacedOnBoardIfItWasNotInChancellorsHand() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, PresidentialPower {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -533,7 +531,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test(expected = NotChancellorCannotPlacePolicies.class)
-    public void shouldNotAllowPresidentToPlaceCardsOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, Victory, NotOwnerOfPolicy, GameNotStartedState, PresidentialPower, NotChancellorCannotPlacePolicies, PresidentPickingPoliciesState {
+    public void shouldNotAllowPresidentToPlaceCardsOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, NotOwnerOfPolicy, PresidentialPower, NotChancellorCannotPlacePolicies {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -568,7 +566,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldRemoveCardsFromChancellorsHandWhenHePlacedACardOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, Victory, NotChancellorCannotPlacePolicies, NotOwnerOfPolicy, GameNotStartedState, PresidentialPower, PresidentPickingPoliciesState {
+    public void shouldRemoveCardsFromChancellorsHandWhenHePlacedACardOnBoard() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, NotChancellorCannotPlacePolicies, NotOwnerOfPolicy, PresidentialPower {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -613,7 +611,7 @@ public class GameLegislativeJpaTest {
     }
 
     @Test
-    public void shouldSendNotPlacedCardToDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, ChancellorNominationState, Victory, NotChancellorCannotPlacePolicies, NotOwnerOfPolicy, GameNotStartedState, PresidentialPower, PresidentPickingPoliciesState {
+    public void shouldSendNotPlacedCardToDiscardPile() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, PlayerNotInGame, GovernmentShutdown, GameState, Victory, NotChancellorCannotPlacePolicies, NotOwnerOfPolicy, PresidentialPower {
         game = new Game();
         playerOne = new Player("Player One");
         playerOne = playerRepo.save(playerOne);
@@ -655,5 +653,40 @@ public class GameLegislativeJpaTest {
         game = gameRepo.findById(id).get();
         List<Policy> discardedPile = game.getDiscardedPile();
         assertThat(secondPolicy, isIn(discardedPile));
+    }
+
+    @Test(expected = ChancellorPickingPolicyState.class)
+    public void shouldThrowChancellorPickingPolicyStateIfPresidentTriesToNominateAChancellor() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GameState, PlayerNotInGame, GovernmentShutdown {
+        game = new Game();
+        playerOne = new Player("Player One");
+        playerOne = playerRepo.save(playerOne);
+        playerTwo = new Player("Player Two");
+        playerTwo = playerRepo.save(playerTwo);
+        playerThree = new Player("Player Three");
+        playerThree = playerRepo.save(playerThree);
+        playerFour = new Player("Player Four");
+        playerFour = playerRepo.save(playerFour);
+        playerFive = new Player("Player Five");
+        playerFive = playerRepo.save(playerFive);
+        game.addPlayer(playerOne);
+        game.addPlayer(playerTwo);
+        game.addPlayer(playerThree);
+        game.addPlayer(playerFour);
+        game.addPlayer(playerFive);
+        game.start();
+        game.nominateAsChancellor(playerTwo);
+        game.voteYes(playerOne);
+        game.voteYes(playerTwo);
+        game.voteYes(playerThree);
+        game.voteYes(playerFour);
+        game.voteYes(playerFive);
+        long id = gameRepo.save(game).getId();
+        em.flush();
+        em.clear();
+        game = gameRepo.findById(id).get();
+        Player president = game.getPresident().get();
+        List<Policy> hand = president.getPolicyHand();
+        president.giveTwoCardsToChancellor(hand.get(0), hand.get(1));
+        game.nominateAsChancellor(playerFive);
     }
 }
