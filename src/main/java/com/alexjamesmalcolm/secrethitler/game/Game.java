@@ -7,6 +7,7 @@ import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -148,11 +149,11 @@ public class Game {
         }
     }
 
-    public Board getBoard() throws GameNotStartedException {
+    public Board getBoard() throws GameNotStartedState {
         if (isStarted) {
             return board;
         } else {
-            throw new GameNotStartedException();
+            throw new GameNotStartedState();
         }
     }
 

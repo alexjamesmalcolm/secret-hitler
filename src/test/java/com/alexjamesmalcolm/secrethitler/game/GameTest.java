@@ -2,7 +2,7 @@ package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.Board;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameFullOfPlayers;
-import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.TooFewPlayersException;
 import com.alexjamesmalcolm.secrethitler.policies.FascistPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
@@ -185,13 +185,13 @@ public class GameTest {
         underTest.start();
     }
 
-    @Test(expected = GameNotStartedException.class)
-    public void shouldNotHaveBoardBeforeGameStarts() throws GameNotStartedException {
+    @Test(expected = GameNotStartedState.class)
+    public void shouldNotHaveBoardBeforeGameStarts() throws GameNotStartedState {
         underTest.getBoard();
     }
 
     @Test
-    public void shouldHaveBoardAfterGameStarts() throws GameNotStartedException, TooFewPlayersException, GameFullOfPlayers {
+    public void shouldHaveBoardAfterGameStarts() throws GameNotStartedState, TooFewPlayersException, GameFullOfPlayers {
         underTest.addPlayer(playerOne);
         underTest.addPlayer(playerTwo);
         underTest.addPlayer(playerThree);

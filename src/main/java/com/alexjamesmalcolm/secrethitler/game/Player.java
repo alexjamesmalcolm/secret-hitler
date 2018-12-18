@@ -2,7 +2,7 @@ package com.alexjamesmalcolm.secrethitler.game;
 
 import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.PresidentialPower;
 import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
-import com.alexjamesmalcolm.secrethitler.throwable.exceptions.GameNotStartedException;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.NotChancellorCannotPlacePolicies;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.NotOwnerOfPolicy;
@@ -130,7 +130,7 @@ public class Player {
         this.game = game;
     }
 
-    public void placeOnBoard(Policy policy) throws GameNotStartedException, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies {
+    public void placeOnBoard(Policy policy) throws GameNotStartedState, Victory, PresidentialPower, NotOwnerOfPolicy, NotChancellorCannotPlacePolicies {
         if (!game.getChancellor().get().equals(this)) {
             throw new NotChancellorCannotPlacePolicies();
         }

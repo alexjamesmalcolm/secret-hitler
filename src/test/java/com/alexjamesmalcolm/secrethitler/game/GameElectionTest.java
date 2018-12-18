@@ -7,6 +7,7 @@ import com.alexjamesmalcolm.secrethitler.throwable.exceptions.*;
 import com.alexjamesmalcolm.secrethitler.policies.LiberalPolicy;
 import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import com.alexjamesmalcolm.secrethitler.throwable.state.ChancellorNominationState;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -358,7 +359,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldRemoveTermLimitIfPolicyIsPlacedByOtherElectedOfficials() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
+	public void shouldRemoveTermLimitIfPolicyIsPlacedByOtherElectedOfficials() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedState, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -384,7 +385,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldKeepTermLimitForPresidentWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
+	public void shouldKeepTermLimitForPresidentWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedState, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
@@ -402,7 +403,7 @@ public class GameElectionTest {
 	}
 	
 	@Test
-	public void shouldKeepTermLimitForChancellorWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedException, ChancellorNominationState, PlayerNotInGame {
+	public void shouldKeepTermLimitForChancellorWhenPlacingPolicy() throws GameFullOfPlayers, TooFewPlayersException, InvalidNomination, GovernmentShutdown, Victory, PresidentialPower, GameNotStartedState, ChancellorNominationState, PlayerNotInGame {
 		underTest.addPlayer(playerOne);
 	    underTest.addPlayer(playerTwo);
 	    underTest.addPlayer(playerThree);
