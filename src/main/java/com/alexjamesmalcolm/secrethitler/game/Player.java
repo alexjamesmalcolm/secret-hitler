@@ -1,12 +1,12 @@
 package com.alexjamesmalcolm.secrethitler.game;
 
+import com.alexjamesmalcolm.secrethitler.policies.Policy;
 import com.alexjamesmalcolm.secrethitler.throwable.events.presidentialpower.PresidentialPower;
 import com.alexjamesmalcolm.secrethitler.throwable.events.victories.Victory;
-import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.IdentityAlreadyAssigned;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.NotChancellorCannotPlacePolicies;
 import com.alexjamesmalcolm.secrethitler.throwable.exceptions.NotOwnerOfPolicy;
-import com.alexjamesmalcolm.secrethitler.policies.Policy;
+import com.alexjamesmalcolm.secrethitler.throwable.state.GameNotStartedState;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -50,7 +50,8 @@ public class Player {
     @ManyToOne
     private Game game;
 
-    private Player() {}
+    private Player() {
+    }
 
     Player(long id) {
         this("Player with id " + id);
@@ -108,9 +109,9 @@ public class Player {
         return termLimited;
     }
 
-	public void removeTermLimit() {
-		termLimited = false;
-	}
+    public void removeTermLimit() {
+        termLimited = false;
+    }
 
     public List<Policy> getPolicyHand() {
         return hand;

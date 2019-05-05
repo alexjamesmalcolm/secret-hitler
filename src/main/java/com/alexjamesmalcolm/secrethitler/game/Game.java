@@ -60,6 +60,12 @@ public class Game {
 
     public Game() {}
 
+    public Game(Player player) {
+        try {
+            addPlayer(player);
+        } catch (GameFullOfPlayers ignored) {}
+    }
+
     public void addPlayer(Player player) throws GameFullOfPlayers {
         if (players.size() == 10) {
             throw new GameFullOfPlayers();
